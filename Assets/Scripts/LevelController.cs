@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum FlowName { Light, Medium, High }
+public enum FlowName { Light, Medium, Medium_Slow, High }
 
 
 public class LevelController : MonoBehaviour {
@@ -14,12 +14,17 @@ public class LevelController : MonoBehaviour {
     {
         { FlowName.Light , new Flow{ rate = 1.0f,  duration = 1.0f, receiveDurationAfterSend = 5.0f } },
         { FlowName.Medium , new Flow{ rate = 1.5f,  duration = 5.0f, receiveDurationAfterSend = 5.0f } },
+        { FlowName.Medium_Slow , new Flow{ rate = 0.5f,  duration = 10.0f, receiveDurationAfterSend = 5.0f } },
         { FlowName.High , new Flow{ rate = 2.0f,  duration = 10.0f, receiveDurationAfterSend = 2.0f } }
     };
 
     float startTime;
     private List<Transmission> runningEntries;
     private Queue<ScheduleEntry> scheduleQueue;
+
+    // [packets/second]
+    public float floodRate = 2.0f;
+    private float lastFlood = 0.0f;
 
     void Start () {
         scheduleQueue = new Queue<ScheduleEntry>(schedule);
@@ -29,7 +34,36 @@ public class LevelController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        RunSchedule();
+
+        if (PlayerFailed())
+        {
+            FloodRoom();
+        }
+        else
+        {
+            RunSchedule();
+        }
+    }
+
+    bool PlayerFailed()
+    {
+        // todo count number of packets in scene
+        return false;
+    }
+
+    void FloodRoom()
+    {
+        float floodInterval = 1 / floodRate;
+        float timeNow = Time.time;
+        if ((lastFlood + lastFlood) < timeNow)
+        {
+            lastFlood = timeNow;
+
+            foreach(var p in ports)
+            {
+                p.emmit();
+            }
+        }
     }
 
     void RunSchedule()
@@ -146,19 +180,19 @@ public class ScheduleEntry
     public FlowName type;
     public float endTime { get; private set; }
 
-    private Queue<float> emmitTicks;
+    private Queue<float> emissionTimes;
     private float actualStart;
 
     public bool EmmitNow()
     {
         float elapsedTime = Time.time - actualStart;
-        if(emmitTicks.Count == 0) return false; 
+        if(emissionTimes.Count == 0) return false; 
 
-        float nextTime = emmitTicks.Peek();
+        float nextTime = emissionTimes.Peek();
 
         if(elapsedTime > nextTime)
         {
-            emmitTicks.Dequeue();
+            emissionTimes.Dequeue();
             return true;
         }
 
@@ -170,13 +204,13 @@ public class ScheduleEntry
         LevelController.Flow flow = LevelController.FlowLevels[type];
         actualStart = Time.time;
         endTime = actualStart + flow.duration + flow.receiveDurationAfterSend;
-        emmitTicks = new Queue<float>();
+        emissionTimes = new Queue<float>();
 
         int total = flow.NumEmmits();
         float interval = 1 / flow.rate;
 
         for (int i = 0; i < total; i++)
-            emmitTicks.Enqueue(interval * i);
+            emissionTimes.Enqueue(interval * i);
 
         return this;
     }

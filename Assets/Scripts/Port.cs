@@ -13,6 +13,16 @@ public class Port : MonoBehaviour {
         currentTransmissionId = transmissionId;
     }
 
+    public void emmit()
+    {
+        //todo spawn packet with trasnmissionId
+    }
+
+    public bool CanAcceptPacket(int transmissionId)
+    {
+        return (transmissionId == currentTransmissionId);
+    }
+
 	void Start () {
         reservedUntil = 0.0f;
 	}

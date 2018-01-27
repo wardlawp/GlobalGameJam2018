@@ -30,6 +30,7 @@ public class Transmission {
         if (schedule.EmmitNow())
         {
             Debug.Log("Transmission [" + id.ToString() + "] emmiting at " + Time.time.ToString());
+            source.emmit();
         }
 
         return !schedule.IsOver();
