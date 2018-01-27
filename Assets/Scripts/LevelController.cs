@@ -2,79 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum FlowName { Light, Medium, High }
+
 
 public class LevelController : MonoBehaviour {
 
-    public enum FlowName { Light, Medium, High }
-    public List<Pipe> pipes;
-
-    [System.Serializable]
-    public class ScheduleEntry
-    {
-        public float time;
-        public FlowName type;
-
-        private Queue<float> emmitTicks;
-        private float startTime;
-
-        public bool EmmitNow(float timeNow)
-        {
-            if(emmitTicks.Count == 0) return false; 
-
-            float nextTime = emmitTicks.Peek();
-
-            if((timeNow - startTime) > nextTime)
-            {
-                emmitTicks.Dequeue();
-                return true;
-            }
-
-            return false;
-        }
-
-        public ScheduleEntry Init(float timeNow)
-        {
-            startTime = timeNow;
-            emmitTicks = new Queue<float>();
-
-            int total = LevelController.FlowLevels[type].NumEmmits();
-            float interval = 1 / LevelController.FlowLevels[type].rate;
-
-            for (int i = 0; i < total; i++)
-                emmitTicks.Enqueue(interval * i);
-
-            return this;
-        }
-
-        public bool IsOver(float runningTime)
-        {
-            return runningTime >= (time + LevelController.FlowLevels[type].duration);
-        }
-
-    }
-
+    public List<Port> ports;
     public List<ScheduleEntry> schedule;
 
-    struct Flow
-    {
-        // [Emmits/second]     
-        public float rate;
-        // [seconds]
-        public float duration;
-
-        public int NumEmmits()
-        {
-            return Mathf.FloorToInt(rate * duration);
-        }
-    };
-
-
-    
-
-    
 	void Start () {
         scheduleQueue = new Queue<ScheduleEntry>(schedule);
-        runningEntries = new List<ScheduleEntry>();
+        runningEntries = new List<Transmission>();
         runningTime = Time.time;
 	}
 	
@@ -94,14 +32,14 @@ public class LevelController : MonoBehaviour {
 
             if (entry.IsOver(runningTime))
             {
-                //Debug.Log("End");
+                Debug.Log("End");
                 runningEntries.RemoveAt(i);
             }
             else
             {
                 if (entry.EmmitNow(runningTime))
                 {
-                    //Debug.Log("emmit");
+                    Debug.Log("emmit");
                 }
                 i++;
             }
@@ -124,8 +62,17 @@ public class LevelController : MonoBehaviour {
 
             if (entry.time < runningTime)
             {
-                //Debug.Log("Start");
-                runningEntries.Add(scheduleQueue.Dequeue().Init(runningTime));
+                Debug.Log("Start");
+
+                List<Port> freePort = GetFreePort();
+
+                Transmission startingTransmission = new Transmission(
+                    freePort[0],
+                    freePort[1],
+                    scheduleQueue.Dequeue().Init(runningTime)
+                );
+
+                runningEntries.Add(startingTransmission);
             }
             else
             {
@@ -134,7 +81,25 @@ public class LevelController : MonoBehaviour {
         }
     }
 
-    static Dictionary<FlowName, Flow> FlowLevels = new Dictionary<FlowName, Flow>()
+
+    List<Port> GetFreePort()
+    {
+        return ports;//todo
+    }
+    public struct Flow
+    {
+        // [Emmits/second]     
+        public float rate;
+        // [seconds]
+        public float duration;
+
+        public int NumEmmits()
+        {
+            return Mathf.FloorToInt(rate * duration);
+        }
+    };
+
+    public static Dictionary<FlowName, Flow> FlowLevels = new Dictionary<FlowName, Flow>()
     {
         { FlowName.Light , new Flow{ rate = 1.0f,  duration = 1.0f } },
         { FlowName.Medium , new Flow{ rate = 1.5f,  duration = 5.0f } },
@@ -143,6 +108,56 @@ public class LevelController : MonoBehaviour {
     
 
     float runningTime;
-    private List<ScheduleEntry> runningEntries;
+    private List<Transmission> runningEntries;
     private Queue<ScheduleEntry> scheduleQueue;
+}
+
+[System.Serializable]
+public class ScheduleEntry
+{
+    public float time;
+    public FlowName type;
+
+    private Queue<float> emmitTicks;
+    private float startTime;
+
+    public bool EmmitNow(float timeNow)
+    {
+        if(emmitTicks.Count == 0) return false; 
+
+        float nextTime = emmitTicks.Peek();
+
+        if((timeNow - startTime) > nextTime)
+        {
+            emmitTicks.Dequeue();
+            return true;
+        }
+
+        return false;
+    }
+
+    public ScheduleEntry Init(float timeNow)
+    {
+        startTime = timeNow;
+        emmitTicks = new Queue<float>();
+
+        int total = LevelController.FlowLevels[type].NumEmmits();
+        float interval = 1 / LevelController.FlowLevels[type].rate;
+
+        for (int i = 0; i < total; i++)
+            emmitTicks.Enqueue(interval * i);
+
+        return this;
+    }
+
+    public bool IsOver(float runningTime)
+    {
+        return runningTime >= (time + LevelController.FlowLevels[type].duration);
+    }
+
+    public float EndTime()
+    {
+        return startTime + LevelController.FlowLevels[type].duration;
+    }
+
 }
