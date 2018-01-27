@@ -13,17 +13,35 @@ public class Port : MonoBehaviour {
         currentTransmissionId = transmissionId;
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "packet")
+        {
+            Debug.Log("Packet has entered port trigger");
+            Packet collidingPacket = other.gameObject.GetComponent<Packet>();
+
+            if (CanAcceptPacket(collidingPacket.transmissionId))
+            {
+                Debug.Log("Port destroying packet");
+                Destroy(other.gameObject);
+            }
+        }
+
+    }
+
+
     public void emmit()
     {
         //todo spawn packet with trasnmissionId
     }
 
-    public bool CanAcceptPacket(int transmissionId)
+    private bool CanAcceptPacket(int transmissionId)
     {
         return (transmissionId == currentTransmissionId);
     }
 
 	void Start () {
+        currentTransmissionId = -2;
         reservedUntil = 0.0f;
 	}
 	
