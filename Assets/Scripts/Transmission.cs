@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Transmission : MonoBehaviour {
+public class Transmission {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public Transmission(Port source, Port destination, ScheduleEntry schedule)
+    {
+        this.source = source;
+        this.destination = destination;
+        this.schedule = schedule;
+
+        source.reservedUntil = schedule.EndTime();
+    }
+
+    public Port source;
+    public Port destination;
+    public ScheduleEntry schedule;
 }
