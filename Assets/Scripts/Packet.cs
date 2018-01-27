@@ -6,10 +6,12 @@ public class Packet : MonoBehaviour {
 
     public int transmissionId { get; private set; }
 
+    public void Init(int id)
+    {
+        transmissionId = id;
+    }
 	// Use this for initialization
 	void Start () {
-        transmissionId = -2;
-
     }
 	
 	// Update is called once per frame

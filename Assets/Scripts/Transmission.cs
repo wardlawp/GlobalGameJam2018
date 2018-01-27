@@ -19,7 +19,7 @@ public class Transmission {
 
         float timeEnd = schedule.endTime; ;
 
-        source.reserve(id, timeEnd);
+        source.reserve(id, timeEnd, true);
         destination.reserve(id, timeEnd);
 
         Debug.Log("Transmission [" + id.ToString() + "] starting at " + Time.time.ToString());

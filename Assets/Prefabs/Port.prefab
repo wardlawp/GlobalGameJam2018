@@ -136,3 +136,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76431a0e204c2044f82af0a0d19bad89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  packetBlueprint: {fileID: 1507982259105922, guid: 1d748b8d2d979bd4b90418f0db612f86,
+    type: 2}
