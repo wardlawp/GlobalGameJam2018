@@ -25,17 +25,23 @@ public class Player : MonoBehaviour {
         {
             if (Physics.Raycast(m_viewCamera.transform.position, m_viewCamera.transform.forward, out raycastHit, 3f))
             {
-                if (!raycastHit.Equals(gameObject))
+                if (raycastHit.transform != transform)
                 {
                     //m_carrying = true;
-                    m_attachedObject = raycastHit.transform;
-                    //m_attachedObject.transform.position = m_viewCamera.transform.position + m_viewCamera.transform.forward;
-                    //m_attachedObject.transform.parent = m_viewCamera.transform;
-                    Rigidbody rb = m_attachedObject.GetComponent<Rigidbody>();
-                    if (rb != null)
+                    var hitTransform = raycastHit.transform.root;
+                    if (hitTransform.GetComponent<PickupTarget>())
                     {
-                        rb.useGravity = false;
+                        m_attachedObject = hitTransform;
+                        //m_attachedObject.transform.position = m_viewCamera.transform.position + m_viewCamera.transform.forward;
+                        //m_attachedObject.transform.parent = m_viewCamera.transform;
+                        Rigidbody rb = m_attachedObject.GetComponent<Rigidbody>();
+                        if (rb != null)
+                        {
+                            rb.useGravity = false;
+                            rb.freezeRotation = true;
+                        }
                     }
+                   
                 }
             }
         }
@@ -46,6 +52,7 @@ public class Player : MonoBehaviour {
             if (rb != null)
             {
                 rb.useGravity = true;
+                rb.freezeRotation = false;
             }
             m_attachedObject = null;
             //m_carrying = false;
@@ -58,6 +65,7 @@ public class Player : MonoBehaviour {
             if (rb != null)
             {
                 rb.useGravity = true;
+                rb.freezeRotation = false;
             }
             m_attachedObject = null;
             rb.AddForceAtPosition(m_viewCamera.transform.forward * m_throwForce, m_attachmentPoint.position);
@@ -86,13 +94,11 @@ public class Player : MonoBehaviour {
                     rb.velocity = new Vector3(0f, 0f, 0f);
                 }
 
-                // Update angular velocity
-                if (m_attachedObject.up != Vector3.up)
-                {
-                    //float angleDelta = Mathf.Deg2Rad * Vector3.Angle(m_attachedObject.up, Vector3.up);
-                    float rotationPerTick = Mathf.Deg2Rad * m_orientationSpeed * Time.fixedDeltaTime;
-                    m_attachedObject.up = Vector3.RotateTowards(m_attachedObject.up, Vector3.up, rotationPerTick, 0f);
-                }
+                var pickupTarget = m_attachedObject.GetComponent<PickupTarget>();
+                float rotationPerTick = Mathf.Deg2Rad * m_orientationSpeed * Time.fixedDeltaTime;
+                Quaternion targetRotation = Quaternion.Euler(pickupTarget.rotationOffset);
+                targetRotation = Quaternion.LookRotation(transform.forward, Vector3.up) * targetRotation;
+                rb.rotation = Quaternion.Slerp(m_attachedObject.rotation, targetRotation, rotationPerTick);
             }
         }
     }

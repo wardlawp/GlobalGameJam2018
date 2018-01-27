@@ -14,10 +14,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - PhysicalObject
+  - Details
+  - IgnorePacketsAndPhysicalObjects
+  - Packets
   - 
   - 
   - 
