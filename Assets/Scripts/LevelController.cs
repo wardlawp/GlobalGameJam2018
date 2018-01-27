@@ -10,16 +10,26 @@ public class LevelController : MonoBehaviour {
     public List<Port> ports;
     public List<ScheduleEntry> schedule;
 
-	void Start () {
+    public static Dictionary<FlowName, Flow> FlowLevels = new Dictionary<FlowName, Flow>()
+    {
+        { FlowName.Light , new Flow{ rate = 1.0f,  duration = 1.0f, receiveDurationAfterSend = 5.0f } },
+        { FlowName.Medium , new Flow{ rate = 1.5f,  duration = 5.0f, receiveDurationAfterSend = 5.0f } },
+        { FlowName.High , new Flow{ rate = 2.0f,  duration = 10.0f, receiveDurationAfterSend = 2.0f } }
+    };
+
+    float startTime;
+    private List<Transmission> runningEntries;
+    private Queue<ScheduleEntry> scheduleQueue;
+
+    void Start () {
         scheduleQueue = new Queue<ScheduleEntry>(schedule);
         runningEntries = new List<Transmission>();
-        runningTime = Time.time;
-	}
+        startTime = Time.time;
+    }
 	
 	// Update is called once per frame
 	void Update () {
         RunSchedule();
-        runningTime += Time.deltaTime;
     }
 
     void RunSchedule()
@@ -28,19 +38,15 @@ public class LevelController : MonoBehaviour {
 
         for (int i = 0; i < runningEntries.Count;)
         {
-            ScheduleEntry entry = runningEntries[i];
+            Transmission trans = runningEntries[i];
 
-            if (entry.IsOver(runningTime))
+            if (!trans.Run())
             {
-                Debug.Log("End");
+                trans.End();
                 runningEntries.RemoveAt(i);
             }
             else
             {
-                if (entry.EmmitNow(runningTime))
-                {
-                    Debug.Log("emmit");
-                }
                 i++;
             }
         }
@@ -49,8 +55,8 @@ public class LevelController : MonoBehaviour {
     private void DequeueScheduledEntries()
     {
         bool done = false;
+        float elapsedTime = Time.time - startTime;
 
-        // get the entries we should run
         while (!done)
         {
             if (scheduleQueue.Count == 0)
@@ -60,16 +66,14 @@ public class LevelController : MonoBehaviour {
 
             var entry = scheduleQueue.Peek();
 
-            if (entry.time < runningTime)
+            if (entry.scheduledStart <=  elapsedTime)
             {
-                Debug.Log("Start");
-
-                List<Port> freePort = GetFreePort();
-
+                Port[] freePort = Get2FreePorts(elapsedTime);
+                
                 Transmission startingTransmission = new Transmission(
                     freePort[0],
                     freePort[1],
-                    scheduleQueue.Dequeue().Init(runningTime)
+                    scheduleQueue.Dequeue().Init()
                 );
 
                 runningEntries.Add(startingTransmission);
@@ -82,52 +86,77 @@ public class LevelController : MonoBehaviour {
     }
 
 
-    List<Port> GetFreePort()
+    Port[] Get2FreePorts(float timeNow)
     {
-        return ports;//todo
+        List<Port> freePorts = new List<Port>();
+
+        foreach(var p in ports)
+        {
+            if(p.reservedUntil <= timeNow)
+            {
+                freePorts.Add(p);
+            }
+        }
+
+        int numFreePorts = freePorts.Count;
+
+        if (numFreePorts < 2)
+        {
+            throw new System.Exception("Schedule is trying to get free port pair when there are less than 2");
+        }
+
+        int[] rands = new int[] { -1, -1 };
+        rands[0] = Random.Range(0, numFreePorts);
+            
+        int next;
+
+        do
+        {
+            next = Random.Range(0, numFreePorts);
+        } while (rands[0] == next);
+
+        rands[1] = next;
+
+        Random.Range(0, numFreePorts);
+
+
+        return new Port[] { freePorts[rands[0]], freePorts[rands[1]] };
     }
+
     public struct Flow
     {
         // [Emmits/second]     
         public float rate;
         // [seconds]
         public float duration;
+        // [seconds]
+        public float receiveDurationAfterSend;
 
         public int NumEmmits()
         {
             return Mathf.FloorToInt(rate * duration);
         }
     };
-
-    public static Dictionary<FlowName, Flow> FlowLevels = new Dictionary<FlowName, Flow>()
-    {
-        { FlowName.Light , new Flow{ rate = 1.0f,  duration = 1.0f } },
-        { FlowName.Medium , new Flow{ rate = 1.5f,  duration = 5.0f } },
-        { FlowName.High , new Flow{ rate = 2.0f,  duration = 10.0f } }
-    };
-    
-
-    float runningTime;
-    private List<Transmission> runningEntries;
-    private Queue<ScheduleEntry> scheduleQueue;
 }
 
 [System.Serializable]
 public class ScheduleEntry
 {
-    public float time;
+    public float scheduledStart;
     public FlowName type;
+    public float endTime { get; private set; }
 
     private Queue<float> emmitTicks;
-    private float startTime;
+    private float actualStart;
 
-    public bool EmmitNow(float timeNow)
+    public bool EmmitNow()
     {
+        float elapsedTime = Time.time - actualStart;
         if(emmitTicks.Count == 0) return false; 
 
         float nextTime = emmitTicks.Peek();
 
-        if((timeNow - startTime) > nextTime)
+        if(elapsedTime > nextTime)
         {
             emmitTicks.Dequeue();
             return true;
@@ -136,13 +165,15 @@ public class ScheduleEntry
         return false;
     }
 
-    public ScheduleEntry Init(float timeNow)
+    public ScheduleEntry Init()
     {
-        startTime = timeNow;
+        LevelController.Flow flow = LevelController.FlowLevels[type];
+        actualStart = Time.time;
+        endTime = actualStart + flow.duration + flow.receiveDurationAfterSend;
         emmitTicks = new Queue<float>();
 
-        int total = LevelController.FlowLevels[type].NumEmmits();
-        float interval = 1 / LevelController.FlowLevels[type].rate;
+        int total = flow.NumEmmits();
+        float interval = 1 / flow.rate;
 
         for (int i = 0; i < total; i++)
             emmitTicks.Enqueue(interval * i);
@@ -150,14 +181,8 @@ public class ScheduleEntry
         return this;
     }
 
-    public bool IsOver(float runningTime)
+    public bool IsOver()
     {
-        return runningTime >= (time + LevelController.FlowLevels[type].duration);
+        return Time.time >= endTime;
     }
-
-    public float EndTime()
-    {
-        return startTime + LevelController.FlowLevels[type].duration;
-    }
-
 }
