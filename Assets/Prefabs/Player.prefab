@@ -24,8 +24,23 @@ GameObject:
   - component: {fileID: 54776685214650270}
   - component: {fileID: 82349703145502720}
   - component: {fileID: 114752076475938832}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1760333393203864
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4387544575917368}
+  m_Layer: 2
+  m_Name: AttachmentPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +57,7 @@ GameObject:
   - component: {fileID: 20224910990473400}
   - component: {fileID: 81145704355759014}
   - component: {fileID: 124065622895863790}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FirstPersonCharacter
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -58,8 +73,22 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4387544575917368}
   m_Father: {fileID: 4934916272905458}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4387544575917368
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1760333393203864}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4337572068700892}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4934916272905458
@@ -327,6 +356,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7d8507004e68245bb68a0629febb17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_viewCamera: {fileID: 20224910990473400}
+  m_attachedObject: {fileID: 0}
+  m_attachmentPoint: {fileID: 4387544575917368}
+  m_pullForce: 20
+  m_throwForce: 175
+  m_orientationSpeed: 360
 --- !u!124 &124065622895863790
 Behaviour:
   m_ObjectHideFlags: 1
