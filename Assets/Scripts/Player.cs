@@ -28,10 +28,10 @@ public class Player : MonoBehaviour {
                 if (raycastHit.transform != transform)
                 {
                     //m_carrying = true;
-                    var hitTransform = raycastHit.transform.root;
-                    if (hitTransform.GetComponent<PickupTarget>())
+                    var hitTransform = raycastHit.transform.GetComponentInParent(typeof(PickupTarget));
+                    if (hitTransform)
                     {
-                        m_attachedObject = hitTransform;
+                        m_attachedObject = hitTransform.transform;
                         //m_attachedObject.transform.position = m_viewCamera.transform.position + m_viewCamera.transform.forward;
                         //m_attachedObject.transform.parent = m_viewCamera.transform;
                         Rigidbody rb = m_attachedObject.GetComponent<Rigidbody>();
