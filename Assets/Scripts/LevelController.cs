@@ -26,6 +26,8 @@ public class LevelController : MonoBehaviour {
     private List<Transmission> runningEntries;
     private Queue<ScheduleEntry> scheduleQueue;
 
+    public CameraShake cameraShake;
+
     // [packets/second]
     public float gameOverFloodRate = 2.0f;
     public int packetLimit = 100;
@@ -80,7 +82,8 @@ public class LevelController : MonoBehaviour {
 
             foreach(var p in ports)
             {
-                p.emmit(true);
+                cameraShake.Shake();
+                p.emit(true);
             }
         }
     }
@@ -95,6 +98,7 @@ public class LevelController : MonoBehaviour {
 
             if (!trans.Run())
             {
+                cameraShake.Shake();
                 trans.End();
                 runningEntries.RemoveAt(i);
             }
@@ -227,14 +231,14 @@ public class LevelController : MonoBehaviour {
 
     public struct Flow
     {
-        // [Emmits/second]     
+        // [emits/second]     
         public float rate;
         // [seconds]
         public float duration;
         // [seconds]
         public float receiveDurationAfterSend;
 
-        public int NumEmmits()
+        public int Numemits()
         {
             return Mathf.FloorToInt(rate * duration);
         }
@@ -248,19 +252,19 @@ public class ScheduleEntry
     public FlowName type;
     public float endTime { get; private set; }
 
-    private Queue<float> emmitionTimes;
+    private Queue<float> emissionTimes;
     private float actualStart;
 
-    public bool EmmitNow()
+    public bool emitNow()
     {
         float elapsedTime = Time.time - actualStart;
-        if(emmitionTimes.Count == 0) return false; 
+        if(emissionTimes.Count == 0) return false; 
 
-        float nextTime = emmitionTimes.Peek();
+        float nextTime = emissionTimes.Peek();
 
         if(elapsedTime > nextTime)
         {
-            emmitionTimes.Dequeue();
+            emissionTimes.Dequeue();
             return true;
         }
 
@@ -272,13 +276,13 @@ public class ScheduleEntry
         LevelController.Flow flow = LevelController.FlowLevels[type];
         actualStart = time;
         endTime = actualStart + flow.duration + flow.receiveDurationAfterSend;
-        emmitionTimes = new Queue<float>();
+        emissionTimes = new Queue<float>();
 
-        int total = flow.NumEmmits();
+        int total = flow.Numemits();
         float interval = 1 / flow.rate;
 
         for (int i = 0; i < total; i++)
-            emmitionTimes.Enqueue(interval * i);
+            emissionTimes.Enqueue(interval * i);
 
         return this;
     }

@@ -51,9 +51,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f562d9b66a374a545946181f7b6bcf34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ports: []
+  ports:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   schedule:
-  - time: 1
-    type: 1
-  - time: 1
+  - scheduledStart: 0
     type: 0
+  - scheduledStart: 30
+    type: 2
+  - scheduledStart: 60
+    type: 4
+  cameraShake: {fileID: 0}
+  gameOverFloodRate: 5
+  packetLimit: 15
