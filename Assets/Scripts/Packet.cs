@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Packet : MonoBehaviour {
-    private Color oddChannel = Color.red;
+    private Color oddChannel = Color.yellow;
     private Color evenChannel = Color.blue;
     private Color initial;
+    private bool scheduleOver = false;
 
     public Transmission currentTansmission { get; private set; }
 
@@ -14,7 +15,7 @@ public class Packet : MonoBehaviour {
         initial = GetComponent<MeshRenderer>().material.color;
         currentTansmission = transmission;
 
-        GetComponent<MeshRenderer>().material.color = (transmission.id % 2 == 0) ? evenChannel: oddChannel;
+        GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", ((transmission.id % 2 == 0) ? evenChannel : oddChannel)*0.5f);
 
     }
 	// Use this for initialization
@@ -23,9 +24,10 @@ public class Packet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(currentTansmission == null || currentTansmission.schedule.IsOver(Time.time))
+		if(!scheduleOver && (currentTansmission == null || currentTansmission.schedule.IsOver(Time.time)))
         {
-            GetComponent<MeshRenderer>().material.color = initial;
+            GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", Color.black);
+            scheduleOver = true;
         }
 	}
 }

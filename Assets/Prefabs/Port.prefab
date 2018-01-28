@@ -3388,11 +3388,11 @@ MonoBehaviour:
   ll1: {fileID: 108185330153659908}
   ll2: {fileID: 108330400103401594}
   ll3: {fileID: 108623994119045370}
-  lightColor1: {r: 1, g: 0, b: 0, a: 1}
+  lightColor1: {r: 1, g: 0.9724138, b: 0, a: 1}
   lightColor2: {r: 0, g: 0.0068967342, b: 1, a: 1}
-  glassColor1: {r: 0.6397059, g: 0.037629757, b: 0.037629757, a: 0.653}
+  glassColor1: {r: 0.6397059, g: 0.5981834, b: 0.037629794, a: 0.653}
   glassColor2: {r: 0.047037207, g: 0.051124685, b: 0.6397059, a: 0.622}
-  glassColorOff: {r: 0.5588235, g: 0.5588235, b: 0.5588235, a: 0.578}
+  glassColorOff: {r: 0, g: 0, b: 0, a: 0.578}
   isSource: 1
 --- !u!114 &114776472050722264
 MonoBehaviour:
