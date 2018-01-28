@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HoseEnd : MonoBehaviour {
-
+public class HoseEnd : MonoBehaviour
+{
+    public Hose m_hose;
     public Transform m_attachTo;
     public Transform m_attachmentPoint;
     public ConfigurableJoint m_connectionJoint;
@@ -11,6 +12,7 @@ public class HoseEnd : MonoBehaviour {
     public float m_orientationSpeed = 360f;
 
     public bool m_held = false;
+    public bool direction = true;
 
 	// Use this for initialization
 	void Start () {
@@ -46,5 +48,10 @@ public class HoseEnd : MonoBehaviour {
 //             targetRotation = Quaternion.LookRotation(transform.forward, Vector3.up) * targetRotation;
 //             rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, rotationPerTick);
 //        }
+    }
+
+    public void Send(Packet packet)
+    {
+        m_hose.Send(packet, this);
     }
 }

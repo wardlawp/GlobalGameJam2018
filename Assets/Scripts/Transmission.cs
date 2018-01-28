@@ -7,8 +7,8 @@ public class Transmission {
     public int id;
     public string clientName;
     public string contentName;
-    private Port source;
-    private Port destination;
+    public Port source;
+    public Port destination;
     public ScheduleEntry schedule;
 
     public static bool operator ==(Transmission a, Transmission b)

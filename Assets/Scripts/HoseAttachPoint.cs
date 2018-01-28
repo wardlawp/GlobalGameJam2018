@@ -5,7 +5,8 @@ using UnityEngine;
 public class HoseAttachPoint : MonoBehaviour {
 
     public float m_attachTolerance = 0.5f;
-    public Transform m_attachedHose = null;
+    public HoseEnd m_attachedHose = null;
+    public Port m_port;
 
 	// Use this for initialization
 	void Start () {
@@ -19,14 +20,10 @@ public class HoseAttachPoint : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (m_attachedHose != null)
-        {
-            return;
-        }
-
         Collider[] nearby = Physics.OverlapSphere(transform.position, m_attachTolerance);
         foreach(Collider c in nearby)
         {
+            m_attachedHose = null;
             HoseEnd hose = c.GetComponent<HoseEnd>();
             if (hose != null && !hose.m_held)
             {
@@ -36,16 +33,27 @@ public class HoseAttachPoint : MonoBehaviour {
                     hose.m_connectionJoint.xMotion = ConfigurableJointMotion.Locked;
                     hose.m_connectionJoint.yMotion = ConfigurableJointMotion.Locked;
                     hose.m_connectionJoint.zMotion = ConfigurableJointMotion.Locked;
+
+                    m_attachedHose = hose;
+
+                    Rigidbody hoseRb = hose.GetComponent<Rigidbody>();
+                    if (hoseRb != null)
+                    {
+                        hoseRb.freezeRotation = true;
+                        hoseRb.angularVelocity = Vector3.zero;
+                    }
                 }
-                //                 Rigidbody hoseRb = hose.GetComponent<Rigidbody>();
-                //                 if (hoseRb != null)
-                //                 {
-                //                     hoseRb.useGravity = false;
-                //                     hoseRb.freezeRotation = true;
-                //                 }
-                //                 hose.m_attachTo = transform;
-                //                 m_attachedHose = hose.transform;
+
                 break;
+            }
+
+            if (m_attachedHose)
+            {
+                Packet packet = c.GetComponent<Packet>();
+                if (packet && packet.currentTansmission.source == m_port)
+                {
+                    m_attachedHose.Send(packet);
+                }
             }
         }
     }
