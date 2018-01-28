@@ -98,7 +98,6 @@ public class LevelController : MonoBehaviour {
 
             if (!trans.Run())
             {
-                cameraShake.Shake();
                 trans.End();
                 runningEntries.RemoveAt(i);
             }
