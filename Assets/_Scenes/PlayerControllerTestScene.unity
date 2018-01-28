@@ -499,6 +499,11 @@ Prefab:
       propertyPath: schedule.Array.data[2].type
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114541183540795650, guid: 8a6ab566a75619f40ad86109c1cb0a01,
+        type: 2}
+      propertyPath: gameOverFloodRate
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8a6ab566a75619f40ad86109c1cb0a01, type: 2}
   m_IsPrefabParent: 0
