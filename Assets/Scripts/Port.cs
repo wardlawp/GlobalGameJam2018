@@ -5,7 +5,7 @@ using UnityEngine;
 public class Port : MonoBehaviour {
 
     public GameObject packetBlueprint;
-    public Vector3 spawnOffset;
+    public Transform spawnPoint;
     public float reservedUntil { get; private set; }
     public Transmission currentTransmission { get; private set; }
 
@@ -65,8 +65,8 @@ public class Port : MonoBehaviour {
         GameObject newPacketGObj = Instantiate(packetBlueprint);
         newPacketGObj.GetComponent<Packet>().Init(currentTransmission);
         //todo remove this hack?
-        Vector3 randomNudge = new Vector3(Random.Range(-.2f, +.2f), Random.Range(-.2f, +.2f), Random.Range(-.2f, +.2f));
-        newPacketGObj.transform.position = transform.position + spawnOffset + randomNudge;
+        Vector3 randomNudge = new Vector3(Random.Range(-.1f, +.1f), Random.Range(-.1f, +.1f), Random.Range(-.1f, +.1f));
+        newPacketGObj.transform.position = spawnPoint.position + randomNudge;
     }
 
 	void Start () {
