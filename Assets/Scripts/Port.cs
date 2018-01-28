@@ -11,7 +11,9 @@ public class Port : MonoBehaviour {
     public float spawnForce = 5f;
 
     public MeshRenderer l1, l2, l3;
+    public Light ll1, ll2, ll3;
     private Color color1 = Color.white, color2 = Color.white, color3 = Color.white;
+    public Color lightColor1, lightColor2, glassColor1, glassColor2, glassColorOff;
     float blink = 0.0f;
     bool blinkOn = false;
 
@@ -44,25 +46,38 @@ public class Port : MonoBehaviour {
 
     void unsetColors()
     {
-        color1 = Color.white;
-        color2 = Color.white;
-        color3 = Color.white;
+        color1 = glassColorOff;
+        color2 = glassColorOff;
+        color3 = glassColorOff;
+        ll1.color = Color.white;
+        ll2.color = Color.white;
+        ll3.color = Color.white;
+        ll1.gameObject.SetActive(false);
+        ll2.gameObject.SetActive(false);
+        ll3.gameObject.SetActive(false);
     }
 
     void setColors()
     {
-        Color color = (currentTransmission.id % 2 == 1) ? Color.red : Color.blue;
+        Color color = (currentTransmission.id % 2 == 1) ? glassColor1 : glassColor2;
+        Color lightColor = (currentTransmission.id % 2 == 1) ? lightColor1 : lightColor2;
 
         color1 = color;
+        ll1.color = lightColor;
+        ll1.gameObject.SetActive(true);
 
         if (currentTransmission.schedule.type > FlowName.Light)
         {
             color2 = color;
+            ll2.color = lightColor;
+            ll2.gameObject.SetActive(true);
         }
 
         if (currentTransmission.schedule.type >= FlowName.Medium)
         {
             color3 = color;
+            ll3.color = lightColor;
+            ll3.gameObject.SetActive(true);
         }
 
 
