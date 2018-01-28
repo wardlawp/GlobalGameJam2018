@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 81265216002302094}
   - component: {fileID: 114310163754271502}
   - component: {fileID: 124782997402511074}
+  - component: {fileID: 114332269997941496}
   m_Layer: 2
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -180,7 +181,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -196,14 +197,14 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
+  m_ForceIntoRT: 1
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
@@ -304,6 +305,18 @@ MonoBehaviour:
   rigidbodyFirstPersonController: {fileID: 114669545193393320}
   StrideInterval: 4
   RunningStrideLengthen: 0.722
+--- !u!114 &114332269997941496
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1230352260419992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 1c84dc70ad8352c4e8d9b6a19da50f7b, type: 2}
 --- !u!114 &114490405433603198
 MonoBehaviour:
   m_ObjectHideFlags: 1
