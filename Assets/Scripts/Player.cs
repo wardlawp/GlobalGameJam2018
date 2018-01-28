@@ -88,7 +88,13 @@ public class Player : MonoBehaviour {
             if (rb != null)
             {
                 // Update velocity
-                Vector3 dir = (m_attachmentPoint.position - m_attachedObject.position);
+                Bounds bounds = new Bounds(m_attachedObject.position, Vector3.zero);
+                foreach (var col in m_attachedObject.GetComponentsInChildren<Collider>())
+                {
+                    bounds.Encapsulate(col.bounds);
+                }
+
+                Vector3 dir = (m_attachmentPoint.position - bounds.center);
                 float distSq = dir.sqrMagnitude;
                 if (distSq > 0f)
                 {
