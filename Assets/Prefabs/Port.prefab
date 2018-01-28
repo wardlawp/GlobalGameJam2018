@@ -1017,7 +1017,7 @@ MonoBehaviour:
   packetBlueprint: {fileID: 1507982259105922, guid: 1d748b8d2d979bd4b90418f0db612f86,
     type: 2}
   spawnPoint: {fileID: 4815411668327518}
-  spawnForce: 500
+  spawnForce: 400
   isSource: 1
 --- !u!114 &114776472050722264
 MonoBehaviour:
