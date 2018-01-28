@@ -21,11 +21,11 @@ public class HoseAttachPoint : MonoBehaviour {
     void FixedUpdate()
     {
         Collider[] nearby = Physics.OverlapSphere(transform.position, m_attachTolerance);
-        foreach(Collider c in nearby)
+
+        foreach (Collider c in nearby)
         {
-            m_attachedHose = null;
             HoseEnd hose = c.GetComponent<HoseEnd>();
-            if (hose != null && !hose.m_held)
+            if (hose != null && !hose.m_held && m_attachedHose == null)
             {
                 hose.m_connectionJoint.connectedAnchor = transform.position;
                 if (hose != null)

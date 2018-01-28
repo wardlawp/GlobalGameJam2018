@@ -10,6 +10,10 @@ public class Packet : MonoBehaviour {
 
     public Transmission currentTansmission { get; private set; }
 
+    public List<Collider> hoseSegments;
+    public float hoseSpeed = 10f;
+    public float hoseTolerance = 0.1f;
+
     public void Init(Transmission transmission)
     {
         initial = GetComponent<MeshRenderer>().material.color;
@@ -30,4 +34,21 @@ public class Packet : MonoBehaviour {
             scheduleOver = true;
         }
 	}
+
+    void FixedUpdate()
+    {
+        if (hoseSegments.Count  > 0)
+        {
+            Vector3 transVec = (hoseSegments[0].transform.position - transform.position).normalized * (hoseSpeed * Time.fixedDeltaTime);
+            transform.Translate(transVec);
+            if ((transform.position - hoseSegments[0].transform.position).sqrMagnitude > (hoseTolerance * hoseTolerance))
+            {
+                hoseSegments.RemoveAt(0);
+                if (hoseSegments.Count == 0)
+                {
+                    GetComponent<Rigidbody>().isKinematic = false;
+                }
+            }
+        }
+    }
 }
