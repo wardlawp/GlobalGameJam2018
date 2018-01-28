@@ -244,7 +244,7 @@ MonoBehaviour:
   m_attachedObject: {fileID: 0}
   m_attachmentPoint: {fileID: 4907196935421874}
   m_pullForce: 20
-  m_throwForce: 175
+  m_throwForce: 300
   m_orientationSpeed: 360
 --- !u!114 &114310163754271502
 MonoBehaviour:
