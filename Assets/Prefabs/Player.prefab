@@ -535,7 +535,7 @@ MonoBehaviour:
   m_pullForce: 20
   m_throwForce: 300
   m_orientationSpeed: 360
-  m_pickupRange: 5
+  m_pickupRange: 3
 --- !u!114 &114777446650238712
 MonoBehaviour:
   m_ObjectHideFlags: 1

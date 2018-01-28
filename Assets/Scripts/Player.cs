@@ -100,7 +100,7 @@ public class Player : MonoBehaviour {
             //m_carrying = false;
         }
 
-        if (m_attachedObject != null && Input.GetButtonDown("Throw"))
+        else if (m_attachedObject != null && Input.GetButtonDown("Throw"))
         {
             //m_attachedObject.transform.parent = null;
             m_attachedObject.gameObject.layer = m_attachedObjectOriginalLayer;
