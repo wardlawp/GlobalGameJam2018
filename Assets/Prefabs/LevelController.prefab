@@ -58,10 +58,34 @@ MonoBehaviour:
   - {fileID: 0}
   schedule:
   - scheduledStart: 0
+    type: 1
+  - scheduledStart: 20
     type: 0
-  - scheduledStart: 30
+  - scheduledStart: 50
     type: 2
-  - scheduledStart: 60
+  - scheduledStart: 50
+    type: 1
+  - scheduledStart: 65
+    type: 1
+  - scheduledStart: 80
+    type: 3
+  - scheduledStart: 95
+    type: 2
+  - scheduledStart: 110
+    type: 4
+  - scheduledStart: 115
+    type: 1
+  - scheduledStart: 130
+    type: 3
+  - scheduledStart: 135
+    type: 4
+  - scheduledStart: 150
+    type: 4
+  - scheduledStart: 160
+    type: 3
+  - scheduledStart: 175
+    type: 4
+  - scheduledStart: 185
     type: 4
   cameraShake: {fileID: 0}
   gameOverFloodRate: 5
