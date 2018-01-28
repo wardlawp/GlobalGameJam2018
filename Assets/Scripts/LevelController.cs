@@ -23,8 +23,10 @@ public class LevelController : MonoBehaviour {
     private Queue<ScheduleEntry> scheduleQueue;
 
     // [packets/second]
-    public float floodRate = 2.0f;
-    private float lastFlood = 0.0f;
+    public float gameOverFloodRate = 2.0f;
+    public int packetLimit = 100;
+    private float lastFlood = -1.0f; //init value, don't change
+    private bool failed = false;
 
     void Start () {
         scheduleQueue = new Queue<ScheduleEntry>(schedule);
@@ -47,21 +49,31 @@ public class LevelController : MonoBehaviour {
 
     bool PlayerFailed()
     {
-        // todo count number of packets in scene
-        return false;
+        if(!failed) failed = (GameObject.FindGameObjectsWithTag("packet").Length > packetLimit);
+
+        return failed;
     }
 
     void FloodRoom()
     {
-        float floodInterval = 1 / floodRate;
+        if(lastFlood == -1.0f)
+        {
+            //first flood, reset all ports
+            foreach (var p in ports)
+            {
+                p.Reset();
+            }
+        }
+
+        float floodInterval = 1 / gameOverFloodRate;
         float timeNow = Time.time;
-        if ((lastFlood + lastFlood) < timeNow)
+        if ((lastFlood + floodInterval) < timeNow)
         {
             lastFlood = timeNow;
 
             foreach(var p in ports)
             {
-                p.emmit();
+                p.emmit(true);
             }
         }
     }
@@ -180,19 +192,19 @@ public class ScheduleEntry
     public FlowName type;
     public float endTime { get; private set; }
 
-    private Queue<float> emissionTimes;
+    private Queue<float> emmitionTimes;
     private float actualStart;
 
     public bool EmmitNow()
     {
         float elapsedTime = Time.time - actualStart;
-        if(emissionTimes.Count == 0) return false; 
+        if(emmitionTimes.Count == 0) return false; 
 
-        float nextTime = emissionTimes.Peek();
+        float nextTime = emmitionTimes.Peek();
 
         if(elapsedTime > nextTime)
         {
-            emissionTimes.Dequeue();
+            emmitionTimes.Dequeue();
             return true;
         }
 
@@ -204,13 +216,13 @@ public class ScheduleEntry
         LevelController.Flow flow = LevelController.FlowLevels[type];
         actualStart = Time.time;
         endTime = actualStart + flow.duration + flow.receiveDurationAfterSend;
-        emissionTimes = new Queue<float>();
+        emmitionTimes = new Queue<float>();
 
         int total = flow.NumEmmits();
         float interval = 1 / flow.rate;
 
         for (int i = 0; i < total; i++)
-            emissionTimes.Enqueue(interval * i);
+            emmitionTimes.Enqueue(interval * i);
 
         return this;
     }

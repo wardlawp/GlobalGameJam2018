@@ -38,7 +38,8 @@ public class Transmission {
 
     public void End()
     {
-
+        source.Reset();
+        destination.Reset();
         Debug.Log("Transmission [" + id.ToString() + "] ending at " + Time.time.ToString());
     }
 }
