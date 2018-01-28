@@ -99,6 +99,7 @@ public class LevelController : MonoBehaviour {
             if (!trans.Run())
             {
                 trans.End();
+                trans = null;
                 runningEntries.RemoveAt(i);
             }
             else
