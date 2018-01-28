@@ -212,6 +212,11 @@ Prefab:
       propertyPath: port
       value: 
       objectReference: {fileID: 1591484233}
+    - target: {fileID: 114384218803303648, guid: a5e1b4bb84cb60e408eaeebcb23b7628,
+        type: 2}
+      propertyPath: cursorRate
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5e1b4bb84cb60e408eaeebcb23b7628, type: 2}
   m_IsPrefabParent: 0
@@ -588,6 +593,11 @@ Prefab:
       propertyPath: port
       value: 
       objectReference: {fileID: 511181358}
+    - target: {fileID: 114384218803303648, guid: a5e1b4bb84cb60e408eaeebcb23b7628,
+        type: 2}
+      propertyPath: cursorRate
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5e1b4bb84cb60e408eaeebcb23b7628, type: 2}
   m_IsPrefabParent: 0
@@ -963,6 +973,11 @@ Prefab:
       propertyPath: port
       value: 
       objectReference: {fileID: 1103031263}
+    - target: {fileID: 114384218803303648, guid: a5e1b4bb84cb60e408eaeebcb23b7628,
+        type: 2}
+      propertyPath: cursorRate
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5e1b4bb84cb60e408eaeebcb23b7628, type: 2}
   m_IsPrefabParent: 0

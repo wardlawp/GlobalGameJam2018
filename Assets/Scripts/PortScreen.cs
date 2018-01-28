@@ -7,8 +7,8 @@ public class PortScreen : MonoBehaviour
     public Port port;
     private TextMesh mesh;
     // [char/second]
-    public float cursorRate;
-    public int columnLenght = 20;
+    private float cursorRate = 17;
+    private int columnLenght = 25;
     private PresentationState state;
     
 
@@ -34,7 +34,7 @@ public class PortScreen : MonoBehaviour
         }
         else if(port.currentTransmission != null)
         {
-            state = new PresentationState(port.currentTransmission, columnLenght, cursorRate);
+            state = new PresentationState(port.currentTransmission, columnLenght, cursorRate, port.isSource);
         }
 		
 	}
@@ -43,33 +43,40 @@ public class PortScreen : MonoBehaviour
     {
         float curPosF = 0;
         int curPosI = 0;
-        Transmission transmission;
-        string content;
+        Transmission trans;
+        string content = "";
         float lastTime;
         float rate;
 
-        public PresentationState(Transmission trans, int columnLenght, float rate)
+        public PresentationState(Transmission trans, int columnLenght, float rate, bool incoming)
         {
-            content = "Incoming transmission... \n" +
-                "Client:" + transmission.clientName +
-                "\n Content:" + transmission.contentName;
+            this.trans = trans;
+            string start = incoming ? "Incoming Transmission... " : "Outgoing Transmission...";
+            List<string> items = new List<string> {
+               start,
+                "Client: " + trans.clientName,
+                "Content: " + trans.contentName
+            };
 
-            for(int i = 1; i < content.Length; i++)
+            for (int i = 1; i < items.Count; i++)
             {
-                if(i%columnLenght == 0)
+                if(items[i].Length > columnLenght)
                 {
-                    content.Insert(i, "\n");
+                    items[i] = items[i].Insert(columnLenght, "-\n\t");
                 }
             }
+
+            foreach(var s in items) content += s + "\n\n";
 
             lastTime = Time.time;
             this.rate = rate;
         }
 
+
         public bool Run(TextMesh target)
         {
             // transmission over
-            if (transmission == null) return false;
+            if (trans == null) return false;
 
             // nothing to do
             if (curPosI == content.Length - 1) return true;

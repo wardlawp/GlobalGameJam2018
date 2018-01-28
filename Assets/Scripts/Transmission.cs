@@ -13,6 +13,7 @@ public class Transmission {
 
     public static bool operator ==(Transmission a, Transmission b)
     {
+        if (object.ReferenceEquals(a, null) && object.ReferenceEquals(b, null)) return true;
         if (object.ReferenceEquals(a, null)  || object.ReferenceEquals(b, null)) return false;
 
         return a.id == b.id;
@@ -20,7 +21,8 @@ public class Transmission {
 
     public static bool operator !=(Transmission a, Transmission b)
     {
-        if (object.ReferenceEquals(a, null) || object.ReferenceEquals(b, null)) return false;
+        if (object.ReferenceEquals(a, null) && object.ReferenceEquals(b, null)) return false;
+        if (object.ReferenceEquals(a, null) || object.ReferenceEquals(b, null)) return true;
 
         return a.id != b.id;
     }
