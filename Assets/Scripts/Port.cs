@@ -51,14 +51,16 @@ public class Port : MonoBehaviour {
 
     public void emmit(bool overide = false)
     {
-        if(!overide &&!init)
+        if(!overide && !init)
         {
             throw new System.Exception("Port::emmit() being called before initialization");
         }
 
         GameObject newPacketGObj = Instantiate(packetBlueprint);
         newPacketGObj.GetComponent<Packet>().Init(currentTransmissionId);
-        newPacketGObj.transform.position = transform.position + spawnOffset + new Vector3(Random.Range(-.2f, + .2f),0,0);
+        //todo remove this hack?
+        Vector3 randomNudge = new Vector3(Random.Range(-.2f, +.2f), Random.Range(-.2f, +.2f), Random.Range(-.2f, +.2f));
+        newPacketGObj.transform.position = transform.position + spawnOffset + randomNudge;
     }
 
 	void Start () {
