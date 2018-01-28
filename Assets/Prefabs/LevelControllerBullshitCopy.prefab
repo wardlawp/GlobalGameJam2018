@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 4957926014180830}
   - component: {fileID: 114086017826563788}
   m_Layer: 0
-  m_Name: LevelControllerBullshit 1
+  m_Name: LevelControllerBullshitCopy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
