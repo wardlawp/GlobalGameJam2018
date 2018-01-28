@@ -470,8 +470,8 @@ MonoBehaviour:
       m_RotationOrder: 4
   m_UseHeadBob: 1
   m_HeadBob:
-    HorizontalBobRange: 0.1
-    VerticalBobRange: 0.15
+    HorizontalBobRange: 0.05
+    VerticalBobRange: 0.05
     Bobcurve:
       serializedVersion: 2
       m_Curve:
@@ -508,7 +508,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
-    VerticaltoHorizontalRatio: 2
+    VerticaltoHorizontalRatio: 1
   m_JumpBob:
     BobDuration: 0.2
     BobAmount: 0.1
@@ -535,6 +535,7 @@ MonoBehaviour:
   m_pullForce: 20
   m_throwForce: 300
   m_orientationSpeed: 360
+  m_pickupRange: 5
 --- !u!114 &114777446650238712
 MonoBehaviour:
   m_ObjectHideFlags: 1

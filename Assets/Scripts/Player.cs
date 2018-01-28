@@ -13,18 +13,19 @@ public class Player : MonoBehaviour {
     public float m_pullForce = 20f;
     public float m_throwForce = 75f;
     public float m_orientationSpeed = 360f;
+    public float m_pickupRange = 5f;
 
 	// Use this for initialization
 	void Start () {
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         RaycastHit raycastHit;
-        if (m_attachedObject == null && Input.GetButtonDown("Interact"))
+        if (m_attachedObject == null && (Input.GetButtonDown("Interact") || Input.GetButtonDown("Throw")))
         {
-            if (Physics.Raycast(m_viewCamera.transform.position, m_viewCamera.transform.forward, out raycastHit, 3f))
+            if (Physics.Raycast(m_viewCamera.transform.position, m_viewCamera.transform.forward, out raycastHit, m_pickupRange))
             {
                 if (raycastHit.transform != transform)
                 {
