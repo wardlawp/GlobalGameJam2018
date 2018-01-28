@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsWalking: 0
-  m_WalkSpeed: 7
+  m_WalkSpeed: 6
   m_RunSpeed: 10
   m_RunstepLenghten: 0.7
   m_JumpSpeed: 10
@@ -440,12 +440,12 @@ MonoBehaviour:
     clampVerticalRotation: 1
     MinimumX: -90
     MaximumX: 90
-    smooth: 0
-    smoothTime: 5
+    smooth: 1
+    smoothTime: 150
     lockCursor: 1
   m_UseFovKick: 1
   m_FovKick:
-    Camera: {fileID: 0}
+    Camera: {fileID: 20389569061861166}
     originalFov: 0
     FOVIncrease: 3
     TimeToIncrease: 1
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_UseHeadBob: 1
   m_HeadBob:
     HorizontalBobRange: 0.1
-    VerticalBobRange: 0.1
+    VerticalBobRange: 0.15
     Bobcurve:
       serializedVersion: 2
       m_Curve:
@@ -482,8 +482,8 @@ MonoBehaviour:
         outSlope: 0
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.5
-        value: 1
+        time: 0.5032196
+        value: 0.48672485
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -494,8 +494,8 @@ MonoBehaviour:
         outSlope: 0
         tangentMode: 0
       - serializedVersion: 2
-        time: 1.5
-        value: -1
+        time: 1.5064392
+        value: -0.50442505
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -507,7 +507,7 @@ MonoBehaviour:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
-      m_RotationOrder: 4
+      m_RotationOrder: 0
     VerticaltoHorizontalRatio: 2
   m_JumpBob:
     BobDuration: 0.2

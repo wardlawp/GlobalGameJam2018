@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Packet : MonoBehaviour {
 
-    public int transmissionId { get; private set; }
+    public Transmission currentTansmission { get; private set; }
 
-    public void Init(int id)
+    public void Init(Transmission transmission)
     {
-        transmissionId = id;
+        currentTansmission = transmission;
     }
 	// Use this for initialization
 	void Start () {

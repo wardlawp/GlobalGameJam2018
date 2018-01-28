@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum FlowName { Light, Medium, Medium_Slow, High }
+public enum FlowName { Light_Slow, Light, Medium, Medium_Slow, High }
 
-
+public class ScheduleException : System.Exception {
+    public ScheduleException(string reason) : base(reason) { }
+} 
 public class LevelController : MonoBehaviour {
 
     public List<Port> ports;
@@ -12,9 +14,10 @@ public class LevelController : MonoBehaviour {
 
     public static Dictionary<FlowName, Flow> FlowLevels = new Dictionary<FlowName, Flow>()
     {
-        { FlowName.Light , new Flow{ rate = 1.0f,  duration = 1.0f, receiveDurationAfterSend = 5.0f } },
-        { FlowName.Medium , new Flow{ rate = 1.5f,  duration = 5.0f, receiveDurationAfterSend = 5.0f } },
-        { FlowName.Medium_Slow , new Flow{ rate = 0.5f,  duration = 10.0f, receiveDurationAfterSend = 5.0f } },
+        { FlowName.Light , new Flow{ rate = 1.0f,  duration = 1.0f, receiveDurationAfterSend = 8.0f } },
+        { FlowName.Light_Slow , new Flow{ rate = 1.0f,  duration = 1.0f, receiveDurationAfterSend = 15.0f } },
+        { FlowName.Medium , new Flow{ rate = 1.5f,  duration = 5.0f, receiveDurationAfterSend = 7.0f } },
+        { FlowName.Medium_Slow , new Flow{ rate = 0.5f,  duration = 10.0f, receiveDurationAfterSend = 7.0f } },
         { FlowName.High , new Flow{ rate = 2.0f,  duration = 10.0f, receiveDurationAfterSend = 2.0f } }
     };
 
@@ -32,6 +35,8 @@ public class LevelController : MonoBehaviour {
         scheduleQueue = new Queue<ScheduleEntry>(schedule);
         runningEntries = new List<Transmission>();
         startTime = Time.time;
+
+        testSchedule();
     }
 	
 	// Update is called once per frame
@@ -81,7 +86,7 @@ public class LevelController : MonoBehaviour {
 
     void RunSchedule()
     {
-        DequeueScheduledEntries();
+        DequeueScheduledEntries(Time.time, runningEntries, scheduleQueue);
 
         for (int i = 0; i < runningEntries.Count;)
         {
@@ -99,19 +104,21 @@ public class LevelController : MonoBehaviour {
         }
     }
 
-    private void DequeueScheduledEntries()
+    //delegate double QueuedEntryProcessor(ScheduleEntry);
+
+    private void DequeueScheduledEntries(float time, List<Transmission> target, Queue<ScheduleEntry> queue)
     {
         bool done = false;
-        float elapsedTime = Time.time - startTime;
+        float elapsedTime = time - startTime;
 
         while (!done)
         {
-            if (scheduleQueue.Count == 0)
+            if (queue.Count == 0)
             {
                 break;
             }
 
-            var entry = scheduleQueue.Peek();
+            var entry = queue.Peek();
 
             if (entry.scheduledStart <=  elapsedTime)
             {
@@ -120,10 +127,10 @@ public class LevelController : MonoBehaviour {
                 Transmission startingTransmission = new Transmission(
                     freePort[0],
                     freePort[1],
-                    scheduleQueue.Dequeue().Init()
+                    queue.Dequeue().Init(time)
                 );
 
-                runningEntries.Add(startingTransmission);
+                target.Add(startingTransmission);
             }
             else
             {
@@ -149,7 +156,7 @@ public class LevelController : MonoBehaviour {
 
         if (numFreePorts < 2)
         {
-            throw new System.Exception("Schedule is trying to get free port pair when there are less than 2");
+            throw new ScheduleException("Schedule is trying to get free port pair when there are less than 2");
         }
 
         int[] rands = new int[] { -1, -1 };
@@ -168,6 +175,53 @@ public class LevelController : MonoBehaviour {
 
 
         return new Port[] { freePorts[rands[0]], freePorts[rands[1]] };
+    }
+
+    void testSchedule()
+    {
+        // deep copy
+        int maxConcurrent = ports.Count;
+        Queue<ScheduleEntry> queue = new Queue<ScheduleEntry>(scheduleQueue);
+        List<Transmission> running = new List<Transmission>();
+        float time = 0.0f;
+
+        bool allTransmissionRun = false;
+        try
+        {
+            while (queue.Count != 0 || !allTransmissionRun)
+            {
+                DequeueScheduledEntries(time, running, queue);
+
+                for (int i = 0; i < running.Count;)
+                {
+                    Transmission trans = running[i];
+
+                    if (trans.schedule.IsOver(time))
+                    {
+                        running.RemoveAt(i);
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+
+                allTransmissionRun = (running.Count == 0);
+
+                time += 0.33f;
+            }
+        } catch (ScheduleException s)
+        {
+            Debug.Log("Schedule is bad. Entry at " + queue.Peek().scheduledStart + "s starts too early.");
+            throw s;
+        }
+        
+
+
+        Debug.Log("Schedule is good");
+
+        foreach (var p in ports) p.Reset(true);
+        Transmission.ID_INCREMENT = 0;
     }
 
     public struct Flow
@@ -212,10 +266,10 @@ public class ScheduleEntry
         return false;
     }
 
-    public ScheduleEntry Init()
+    public ScheduleEntry Init(float time)
     {
         LevelController.Flow flow = LevelController.FlowLevels[type];
-        actualStart = Time.time;
+        actualStart = time;
         endTime = actualStart + flow.duration + flow.receiveDurationAfterSend;
         emmitionTimes = new Queue<float>();
 
@@ -228,8 +282,8 @@ public class ScheduleEntry
         return this;
     }
 
-    public bool IsOver()
+    public bool IsOver(float time)
     {
-        return Time.time >= endTime;
+        return time >= endTime;
     }
 }
