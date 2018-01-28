@@ -21,7 +21,6 @@ public class Port : MonoBehaviour {
 
     public void Reset(bool force = false)
     {
-        
         if (!force && initTime == Time.time) return; //something else has reserved this tick, don't reset
 
         init = false;
@@ -45,10 +44,9 @@ public class Port : MonoBehaviour {
 
     void unsetColors()
     {
-        //todo keegan replace
         color1 = Color.white;
-        color1 = Color.white;
-        color1 = Color.white;
+        color2 = Color.white;
+        color3 = Color.white;
     }
 
     void setColors()
@@ -56,12 +54,13 @@ public class Port : MonoBehaviour {
         Color color = (currentTransmission.id % 2 == 1) ? Color.red : Color.blue;
 
         color1 = color;
-        if (currentTransmission.schedule.type >= FlowName.Light)
+
+        if (currentTransmission.schedule.type > FlowName.Light)
         {
             color2 = color;
         }
 
-        if (currentTransmission.schedule.type >= FlowName.Medium_Slow)
+        if (currentTransmission.schedule.type >= FlowName.Medium)
         {
             color3 = color;
         }
