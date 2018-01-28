@@ -25,8 +25,10 @@ public class Player : MonoBehaviour {
         RaycastHit raycastHit;
         if (m_attachedObject == null && (Input.GetButtonDown("Interact") || Input.GetButtonDown("Throw")))
         {
-            if (Physics.Raycast(m_viewCamera.transform.position, m_viewCamera.transform.forward, out raycastHit, m_pickupRange))
+            Vector3 raycastStart = m_viewCamera.transform.position + (m_viewCamera.transform.forward * 0.1f);
+            if (Physics.Raycast(raycastStart, m_viewCamera.transform.forward, out raycastHit, m_pickupRange))
             {
+                //Debug.Log(raycastHit.transform.name);
                 if (raycastHit.transform != transform)
                 {
                     //m_carrying = true;
