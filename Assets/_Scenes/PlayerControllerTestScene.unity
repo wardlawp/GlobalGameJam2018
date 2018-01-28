@@ -311,11 +311,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114608393002238672, guid: fbe06fb64ea803c4e8ddc05ead7f87d8,
-        type: 2}
-      propertyPath: m_throwForce
-      value: 900
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fbe06fb64ea803c4e8ddc05ead7f87d8, type: 2}
   m_IsPrefabParent: 0
@@ -772,6 +767,21 @@ Prefab:
       propertyPath: cameraShake
       value: 
       objectReference: {fileID: 1055537373}
+    - target: {fileID: 114541183540795650, guid: 8a6ab566a75619f40ad86109c1cb0a01,
+        type: 2}
+      propertyPath: schedule.Array.data[0].type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114541183540795650, guid: 8a6ab566a75619f40ad86109c1cb0a01,
+        type: 2}
+      propertyPath: schedule.Array.data[1].type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114541183540795650, guid: 8a6ab566a75619f40ad86109c1cb0a01,
+        type: 2}
+      propertyPath: schedule.Array.data[2].type
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8a6ab566a75619f40ad86109c1cb0a01, type: 2}
   m_IsPrefabParent: 0
