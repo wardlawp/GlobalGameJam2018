@@ -44,6 +44,34 @@ public class Player : MonoBehaviour {
                             rb.useGravity = false;
                             rb.freezeRotation = true;
                         }
+                        HoseEnd hoseEnd = m_attachedObject.GetComponent<HoseEnd>();
+                        if (hoseEnd != null)
+                        {
+                            hoseEnd.m_held = true;
+                            hoseEnd.m_connectionJoint.xMotion = ConfigurableJointMotion.Free;
+                            hoseEnd.m_connectionJoint.yMotion = ConfigurableJointMotion.Free;
+                            hoseEnd.m_connectionJoint.zMotion = ConfigurableJointMotion.Free;
+                        }
+                        //                         Rigidbody hoseRb = hoseEnd.GetComponent<Rigidbody>();
+                        //                         if (hoseRb != null)
+                        //                         {
+                        //                             hoseRb.useGravity = true;
+                        //                             hoseRb.freezeRotation = false;
+                        //                         }
+                        //                         if  (hoseEnd  != null)
+                        //                         {
+                        //                             hoseEnd.m_held = true;
+                        //                             if (hoseEnd.m_attachTo != null)
+                        //                             {
+                        //                                 HoseAttachPoint hoseAttach = hoseEnd.m_attachTo.GetComponent<HoseAttachPoint>();
+                        //                                 if (hoseAttach != null)
+                        //                                 {
+                        //                                     hoseAttach.m_attachedHose = null;
+                        //                                 }
+                        // 
+                        //                                 hoseEnd.m_attachTo = null;
+                        //                             }
+                        //                         }
                     }
                    
                 }
@@ -62,6 +90,11 @@ public class Player : MonoBehaviour {
                 var pickupTarget = m_attachedObject.GetComponent<PickupTarget>();
                 pickupTarget.OnDrop();
             }
+            HoseEnd hoseEnd = m_attachedObject.GetComponent<HoseEnd>();
+            if (hoseEnd != null)
+            {
+                hoseEnd.m_held = false;
+            }
             m_attachedObject = null;
             //m_carrying = false;
         }
@@ -78,6 +111,11 @@ public class Player : MonoBehaviour {
                 rb.freezeRotation = false;
                 var pickupTarget = m_attachedObject.GetComponent<PickupTarget>();
                 pickupTarget.OnDrop();
+            }
+            HoseEnd hoseEnd = m_attachedObject.GetComponent<HoseEnd>();
+            if (hoseEnd != null)
+            {
+                hoseEnd.m_held = false;
             }
             m_attachedObject = null;
             rb.AddForceAtPosition(m_viewCamera.transform.forward * m_throwForce, m_attachmentPoint.position);
