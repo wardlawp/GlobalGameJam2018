@@ -59,7 +59,7 @@ MonoBehaviour:
         iterationCount: 256
         stepSize: 3
         widthModifier: 0.5
-        reflectionBlur: 0.1
+        reflectionBlur: 0.28
         reflectBackfaces: 0
       intensity:
         reflectionMultiplier: 1
