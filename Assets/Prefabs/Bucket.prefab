@@ -310,6 +310,7 @@ GameObject:
   - component: {fileID: 64462551207450018}
   - component: {fileID: 54504368048788224}
   - component: {fileID: 114564247301258816}
+  - component: {fileID: 114931140389633282}
   m_Layer: 10
   m_Name: Bucket
   m_TagString: Untagged
@@ -670,7 +671,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1458445267647736}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 2.5184793, y: 0.75, z: 1.306}
+  m_LocalPosition: {x: 2.5184793, y: 0.61, z: 1.306}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4909607681002930}
@@ -1373,3 +1374,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationOffset: {x: -90, y: 0, z: 0}
   contents: {fileID: 114476466907177958}
+--- !u!114 &114931140389633282
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1458445267647736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3b0ff61702e1a349aea5a96827b87a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationOffset: {x: -90, y: 0, z: 0}
