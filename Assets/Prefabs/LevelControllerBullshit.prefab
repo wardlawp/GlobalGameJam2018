@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4259650208903032}
   - component: {fileID: 65606315034287782}
   - component: {fileID: 114189228856150272}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawn_point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 4769301288868096}
   - component: {fileID: 65717878076855588}
   - component: {fileID: 114882889853840826}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawn_point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 4008417563970994}
   - component: {fileID: 65876126254880324}
   - component: {fileID: 114948486306087360}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawn_point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 4885727895278944}
   - component: {fileID: 65779363001133176}
   - component: {fileID: 114938545725970620}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawn_point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1333231273592198}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4080685926704546}
@@ -390,7 +390,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1291582600049930}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0.1}
+  m_LocalPosition: {x: -0, y: 0, z: 0.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4879341372163276}
@@ -455,7 +455,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1297116700195544}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4850408952766448}
@@ -500,7 +500,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1667083233041184}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4007008340068312}
@@ -731,7 +731,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 1.5}
-  m_Center: {x: 0, y: 0, z: 0.75}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65717878076855588
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -743,7 +743,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 1.5}
-  m_Center: {x: 0, y: 0, z: 0.75}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65779363001133176
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -755,7 +755,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 1.5}
-  m_Center: {x: 0, y: 0, z: 0.75}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65859787215796304
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -779,7 +779,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 1.5}
-  m_Center: {x: 0, y: 0, z: 0.75}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65944115234454020
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -804,7 +804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeOnceAttached: 2
-  forceConstant: 1
+  forceConstant: 50
 --- !u!114 &114201871699065934
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -913,7 +913,7 @@ MonoBehaviour:
   packetBlueprint: {fileID: 1507982259105922, guid: 1d748b8d2d979bd4b90418f0db612f86,
     type: 2}
   spawnPoint: {fileID: 4885727895278944}
-  isSource: 0
+  isSource: 1
 --- !u!114 &114730434495494172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -928,7 +928,7 @@ MonoBehaviour:
   packetBlueprint: {fileID: 1507982259105922, guid: 1d748b8d2d979bd4b90418f0db612f86,
     type: 2}
   spawnPoint: {fileID: 4259650208903032}
-  isSource: 0
+  isSource: 1
 --- !u!114 &114882889853840826
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -941,7 +941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeOnceAttached: 2
-  forceConstant: 1
+  forceConstant: 50
 --- !u!114 &114938545725970620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -954,7 +954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeOnceAttached: 2
-  forceConstant: 1
+  forceConstant: 50
 --- !u!114 &114948486306087360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -967,7 +967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeOnceAttached: 2
-  forceConstant: 1
+  forceConstant: 50
 --- !u!114 &114963708443232080
 MonoBehaviour:
   m_ObjectHideFlags: 1

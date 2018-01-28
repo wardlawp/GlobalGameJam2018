@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeOnceAttached: 2
-  forceConstant: 1
+  forceConstant: 25
 --- !u!114 &114620412990483586
 MonoBehaviour:
   m_ObjectHideFlags: 1

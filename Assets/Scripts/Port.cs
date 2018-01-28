@@ -9,7 +9,7 @@ public class Port : MonoBehaviour {
     public float reservedUntil { get; private set; }
     public Transmission currentTransmission { get; private set; }
 
-    private bool isSource;
+    public bool isSource;
     private bool init = false;
     private float initTime = -1.0f;
 
