@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311926, g: 0.38074008, b: 0.35872707, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1037,23 +1037,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 13
       objectReference: {fileID: 0}
-    - target: {fileID: 1983997017576928, guid: a5e1b4bb84cb60e408eaeebcb23b7628, type: 2}
-      propertyPath: m_Name
-      value: picture_frame (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4197547316017284, guid: a5e1b4bb84cb60e408eaeebcb23b7628, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
     - target: {fileID: 114384218803303648, guid: a5e1b4bb84cb60e408eaeebcb23b7628,
         type: 2}
       propertyPath: port
       value: 
       objectReference: {fileID: 1103031263}
-    - target: {fileID: 114384218803303648, guid: a5e1b4bb84cb60e408eaeebcb23b7628,
-        type: 2}
-      propertyPath: cursorRate
-      value: 2
+    - target: {fileID: 1983997017576928, guid: a5e1b4bb84cb60e408eaeebcb23b7628, type: 2}
+      propertyPath: m_Name
+      value: picture_frame (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5e1b4bb84cb60e408eaeebcb23b7628, type: 2}

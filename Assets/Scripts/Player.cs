@@ -44,8 +44,6 @@ public class Player : MonoBehaviour {
                             pickupTarget.OnPickup();
                             m_attachedObjectOriginalLayer = m_attachedObject.gameObject.layer;
                             m_attachedObject.gameObject.layer = LayerMask.NameToLayer("IgnorePlayer");
-                            rb.useGravity = false;
-                            rb.freezeRotation = true;
                         }
                         HoseEnd hoseEnd = m_attachedObject.GetComponent<HoseEnd>();
                         if (hoseEnd != null)
@@ -88,8 +86,6 @@ public class Player : MonoBehaviour {
             Rigidbody rb = m_attachedObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.useGravity = true;
-                rb.freezeRotation = false;
                 var pickupTarget = m_attachedObject.GetComponent<PickupTarget>();
                 pickupTarget.OnDrop();
             }
@@ -105,22 +101,30 @@ public class Player : MonoBehaviour {
         else if (m_attachedObject != null && Input.GetButtonDown("Throw"))
         {
             //m_attachedObject.transform.parent = null;
-            m_attachedObject.gameObject.layer = m_attachedObjectOriginalLayer;
-            m_attachedObjectOriginalLayer = -1;
+            var bucket = m_attachedObject.GetComponent<Bucket>();
+            if (!bucket)
+            {
+                m_attachedObject.gameObject.layer = m_attachedObjectOriginalLayer;
+                m_attachedObjectOriginalLayer = -1;
+            }
+            
             Rigidbody rb = m_attachedObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.useGravity = true;
-                rb.freezeRotation = false;
                 var pickupTarget = m_attachedObject.GetComponent<PickupTarget>();
-                pickupTarget.OnDrop();
+                pickupTarget.OnThrow();
             }
             HoseEnd hoseEnd = m_attachedObject.GetComponent<HoseEnd>();
             if (hoseEnd != null)
             {
                 hoseEnd.m_held = false;
             }
-            m_attachedObject = null;
+
+            if (!bucket)
+            {
+                m_attachedObject = null;
+            }
+
             rb.AddForceAtPosition(m_viewCamera.transform.forward * m_throwForce, m_attachmentPoint.position);
         }
     }   
@@ -153,10 +157,18 @@ public class Player : MonoBehaviour {
                     rb.velocity = new Vector3(0f, 0f, 0f);
                 }
 
+
                 var pickupTarget = m_attachedObject.GetComponent<PickupTarget>();
                 float rotationPerTick = Mathf.Deg2Rad * m_orientationSpeed * Time.fixedDeltaTime;
                 Quaternion targetRotation = Quaternion.Euler(pickupTarget.rotationOffset);
-                targetRotation = Quaternion.LookRotation(transform.forward, Vector3.up) * targetRotation;
+                if (m_attachedObject.GetComponent<Bucket>() && Input.GetButton("Throw"))
+                {
+                    targetRotation = Quaternion.LookRotation(Vector3.down, transform.forward) * targetRotation;
+                }
+                else
+                {
+                    targetRotation = Quaternion.LookRotation(transform.forward, Vector3.up) * targetRotation;
+                }
                 rb.rotation = Quaternion.Slerp(m_attachedObject.rotation, targetRotation, rotationPerTick);
             }
         }

@@ -12,6 +12,24 @@ public class PickupTarget : MonoBehaviour
         InitialScale = transform.localScale;
     }
 
-    public virtual void OnPickup() { }
-    public virtual void OnDrop() { }
+    public virtual void OnPickup()
+    {
+        var rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.freezeRotation = true;
+    }
+
+    public virtual void OnThrow()
+    {
+        var rb = GetComponent<Rigidbody>();
+        rb.useGravity = true;
+        rb.freezeRotation = false;
+    }
+
+    public virtual void OnDrop()
+    {
+        var rb = GetComponent<Rigidbody>();
+        rb.useGravity = true;
+        rb.freezeRotation = false;
+    }
 }
