@@ -21,10 +21,6 @@ public class Port : MonoBehaviour {
         init = false;
         reservedUntil = 0.0f;
         currentTransmissionId = -2;
-
-        //temporary
-        GetComponentInChildren<Renderer>().material.color = new Color(255, 255, 255);
-
     }
 
     public void reserve(int transmissionId, float untilTime, bool isSource = false)
@@ -33,14 +29,6 @@ public class Port : MonoBehaviour {
         this.isSource = isSource;
         reservedUntil = untilTime;
         currentTransmissionId = transmissionId;
-
-        
-        //temporary
-        GetComponentInChildren<Renderer>().material.color = new Color(
-            !(transmissionId%2 == 0)? 255: 0,
-            !(transmissionId%2 == 1) ? 255 : 0, 
-            0
-        ); 
 
         initTime = Time.time;
     }

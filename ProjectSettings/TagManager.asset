@@ -18,8 +18,8 @@ TagManager:
   - Details
   - IgnorePacketsAndPhysicalObjects
   - Packets
-  - 
-  - 
+  - Player
+  - IgnorePlayer
   - 
   - 
   - 
