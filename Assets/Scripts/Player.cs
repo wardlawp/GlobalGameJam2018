@@ -25,8 +25,10 @@ public class Player : MonoBehaviour {
         RaycastHit raycastHit;
         if (m_attachedObject == null && (Input.GetButtonDown("Interact") || Input.GetButtonDown("Throw")))
         {
-            if (Physics.Raycast(m_viewCamera.transform.position, m_viewCamera.transform.forward, out raycastHit, m_pickupRange))
+            Vector3 raycastStart = m_viewCamera.transform.position + (m_viewCamera.transform.forward * 0.1f);
+            if (Physics.Raycast(raycastStart, m_viewCamera.transform.forward, out raycastHit, m_pickupRange))
             {
+                //Debug.Log(raycastHit.transform.name);
                 if (raycastHit.transform != transform)
                 {
                     //m_carrying = true;
@@ -100,7 +102,7 @@ public class Player : MonoBehaviour {
             //m_carrying = false;
         }
 
-        if (m_attachedObject != null && Input.GetButtonDown("Throw"))
+        else if (m_attachedObject != null && Input.GetButtonDown("Throw"))
         {
             //m_attachedObject.transform.parent = null;
             m_attachedObject.gameObject.layer = m_attachedObjectOriginalLayer;
