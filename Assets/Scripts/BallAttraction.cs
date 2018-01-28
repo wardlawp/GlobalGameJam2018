@@ -5,21 +5,23 @@ using UnityEngine;
 public class BallAttraction : MonoBehaviour {
 
     public float rangeOnceAttached = 2.0f;
-    public float forceConstant = 1.0f;
+    public float forceConstant = 20.0f;
     List<GameObject> attractingObjects = new List<GameObject>();
     private Transmission currentTransmission = null;
 
     void OnTriggerEnter(Collider other)
     {
+        if (GetComponentInParent<Port>().isSource) return;
         if (currentTransmission == null) return;
+
 
         GameObject obj = other.gameObject;
 
         if (obj.tag == "packet")
         {
-            if(obj.GetComponent<Packet>().currentTansmission == currentTransmission)
+            if (obj.GetComponent<Packet>().currentTansmission == currentTransmission)
             {
-                if(!attractingObjects.Contains(obj))
+                if (!attractingObjects.Contains(obj))
                 {
                     attractingObjects.Add(obj);
                 }
@@ -29,6 +31,7 @@ public class BallAttraction : MonoBehaviour {
 
         // Update is called once per frame
     void Update () {
+        if (GetComponentInParent<Port>().isSource) return;
         currentTransmission = GetComponentInParent<Port>().currentTransmission;
 
         if (currentTransmission == null) return;
@@ -45,7 +48,7 @@ public class BallAttraction : MonoBehaviour {
             }
         }
 
-            for (int i =0; i< attractingObjects.Count;)
+        for (int i =0; i< attractingObjects.Count;)
         {
             GameObject obj = attractingObjects[i];
             Vector3 forceDirection = (transform.position - obj.transform.position);
@@ -53,7 +56,8 @@ public class BallAttraction : MonoBehaviour {
 
             if(distance < rangeOnceAttached)
             {
-                Vector3 force = forceDirection.normalized * (forceConstant / (distance * distance));
+                distance /= 3;
+                Vector3 force = forceDirection.normalized * (forceConstant / distance*distance);
                 obj.GetComponent<Rigidbody>().AddForce(force);
                 i++;
             }
