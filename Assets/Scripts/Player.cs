@@ -43,7 +43,7 @@ public class Player : MonoBehaviour {
                         {
                             pickupTarget.OnPickup();
                             m_attachedObjectOriginalLayer = m_attachedObject.gameObject.layer;
-                            m_attachedObject.gameObject.layer = LayerMask.NameToLayer("IgnorePlayer");
+                            //m_attachedObject.gameObject.layer = LayerMask.NameToLayer("IgnorePlayer");
                         }
                         HoseEnd hoseEnd = m_attachedObject.GetComponent<HoseEnd>();
                         if (hoseEnd != null)
@@ -144,7 +144,7 @@ public class Player : MonoBehaviour {
                     bounds.Encapsulate(col.bounds);
                 }
 
-                Vector3 dir = (m_attachmentPoint.position - bounds.center);
+                Vector3 dir = (m_attachmentPoint.position - bounds.center + bounds.extents.y * Vector3.down * 0.5f);
                 float distSq = dir.sqrMagnitude;
                 if (distSq > 0f)
                 {
@@ -158,6 +158,7 @@ public class Player : MonoBehaviour {
                 }
 
 
+                rb.angularVelocity = Vector3.zero;
                 var pickupTarget = m_attachedObject.GetComponent<PickupTarget>();
                 float rotationPerTick = Mathf.Deg2Rad * m_orientationSpeed * Time.fixedDeltaTime;
                 Quaternion targetRotation = Quaternion.Euler(pickupTarget.rotationOffset);
