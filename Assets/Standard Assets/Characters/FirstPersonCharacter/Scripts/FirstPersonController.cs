@@ -42,6 +42,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
+        private float m_moveRamp = 0;
+
         // Use this for initialization
         private void Start()
         {
@@ -105,8 +107,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
                                m_CharacterController.height/2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
             desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
 
-            m_MoveDir.x = desiredMove.x*speed;
-            m_MoveDir.z = desiredMove.z*speed;
+            m_moveRamp = Mathf.Lerp(m_moveRamp, speed, Time.deltaTime * 2.0f);
+
+            m_MoveDir.x = desiredMove.x* m_moveRamp;
+            m_MoveDir.z = desiredMove.z* m_moveRamp;
 
 
             if (m_CharacterController.isGrounded)
@@ -127,8 +131,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             m_CollisionFlags = m_CharacterController.Move(m_MoveDir*Time.fixedDeltaTime);
 
-            ProgressStepCycle(speed);
-            UpdateCameraPosition(speed);
+            ProgressStepCycle(m_moveRamp);
+            UpdateCameraPosition(m_moveRamp);
 
             m_MouseLook.UpdateCursorLock();
         }
@@ -190,12 +194,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     m_HeadBob.DoHeadBob(m_CharacterController.velocity.magnitude +
                                       (speed*(m_IsWalking ? 1f : m_RunstepLenghten)));
                 newCameraPosition = m_Camera.transform.localPosition;
-                newCameraPosition.y = m_Camera.transform.localPosition.y - m_JumpBob.Offset();
+                newCameraPosition.y = m_Camera.transform.localPosition.y - m_JumpBob.Offset() * m_moveRamp;
             }
             else
             {
                 newCameraPosition = m_Camera.transform.localPosition;
-                newCameraPosition.y = m_OriginalCameraPosition.y - m_JumpBob.Offset();
+                newCameraPosition.y = m_OriginalCameraPosition.y - m_JumpBob.Offset() * m_moveRamp;
             }
             m_Camera.transform.localPosition = newCameraPosition;
         }
