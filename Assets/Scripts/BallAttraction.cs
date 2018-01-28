@@ -38,7 +38,9 @@ public class BallAttraction : MonoBehaviour {
 
         for (int i = 0; i < attractingObjects.Count;)
         {
-            if (attractingObjects[i].GetComponent<Packet>().currentTansmission == currentTransmission)
+            GameObject obj = attractingObjects[i];
+
+            if (obj != null && obj.GetComponent<Packet>().currentTansmission == currentTransmission)
             {
                 i++;
             }
@@ -51,6 +53,7 @@ public class BallAttraction : MonoBehaviour {
         for (int i =0; i< attractingObjects.Count;)
         {
             GameObject obj = attractingObjects[i];
+
             Vector3 forceDirection = (transform.position - obj.transform.position);
             float distance = forceDirection.magnitude;
 
