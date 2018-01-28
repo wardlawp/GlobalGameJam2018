@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311926, g: 0.38074008, b: 0.35872707, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -247,35 +247,35 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4399335942851238, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
+    - target: {fileID: 4904248816979052, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
       propertyPath: m_LocalPosition.x
       value: 2.5184793
       objectReference: {fileID: 0}
-    - target: {fileID: 4399335942851238, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
+    - target: {fileID: 4904248816979052, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
       propertyPath: m_LocalPosition.y
       value: 0.61
       objectReference: {fileID: 0}
-    - target: {fileID: 4399335942851238, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
+    - target: {fileID: 4904248816979052, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
       propertyPath: m_LocalPosition.z
       value: 1.306
       objectReference: {fileID: 0}
-    - target: {fileID: 4399335942851238, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
+    - target: {fileID: 4904248816979052, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
       propertyPath: m_LocalRotation.x
       value: -0.7071068
       objectReference: {fileID: 0}
-    - target: {fileID: 4399335942851238, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
+    - target: {fileID: 4904248816979052, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4399335942851238, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
+    - target: {fileID: 4904248816979052, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4399335942851238, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
+    - target: {fileID: 4904248816979052, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
       objectReference: {fileID: 0}
-    - target: {fileID: 4399335942851238, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
+    - target: {fileID: 4904248816979052, guid: 0b7bbeaeb66d88342bd07d95c0585c11, type: 2}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
@@ -769,7 +769,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 1, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -1.89478e-13, y: -0.9999976, z: 0}
+  m_ConnectedAnchor: {x: -1.89478e-13, y: -0.99999714, z: 0}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0

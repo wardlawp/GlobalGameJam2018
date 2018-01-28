@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Bucket
+  m_Name: Bucket 1
   m_Shader: {fileID: 47, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _ALPHABLEND_ON
   m_LightmapFlags: 4
@@ -77,6 +77,6 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 0.14705884, g: 0.057809334, b: 0, a: 0.734}
+    - _Color: {r: 0, g: 0, b: 0, a: 0.834}
     - _EmissionColor: {r: 0.6102941, g: 0.35450906, b: 0.35450906, a: 1}
     - _SpecColor: {r: 0.014705896, g: 0.014705896, b: 0.014705896, a: 1}
