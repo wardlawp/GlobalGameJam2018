@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum FlowName { Light_Slow, Light, Medium, Medium_Slow, High }
+// order matters
+public enum FlowName { Light_Slow, Light, Medium_Slow ,Medium, High }
 
 public class ScheduleException : System.Exception {
     public ScheduleException(string reason) : base(reason) { }
@@ -97,7 +98,6 @@ public class LevelController : MonoBehaviour {
 
             if (!trans.Run())
             {
-                cameraShake.Shake();
                 trans.End();
                 runningEntries.RemoveAt(i);
             }

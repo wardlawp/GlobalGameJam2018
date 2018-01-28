@@ -10,6 +10,11 @@ public class Port : MonoBehaviour {
     public Transmission currentTransmission { get; private set; }
     public float spawnForce = 5f;
 
+    public MeshRenderer l1, l2, l3;
+    private Color color1 = Color.white, color2 = Color.white, color3 = Color.white;
+    float blink = 0.0f;
+    bool blinkOn = false;
+
     public bool isSource;
     private bool init = false;
     private float initTime = -1.0f;
@@ -22,6 +27,8 @@ public class Port : MonoBehaviour {
         init = false;
         reservedUntil = 0.0f;
         currentTransmission = null;
+
+        unsetColors();
     }
 
     public void reserve(Transmission transmission, float untilTime, bool isSource = false)
@@ -32,6 +39,34 @@ public class Port : MonoBehaviour {
         currentTransmission = transmission;
 
         initTime = Time.time;
+        //setColors();
+
+    }
+
+    void unsetColors()
+    {
+        //todo keegan replace
+        color1 = Color.white;
+        color1 = Color.white;
+        color1 = Color.white;
+    }
+
+    void setColors()
+    {
+        Color color = (currentTransmission.id % 2 == 1) ? Color.red : Color.blue;
+
+        color1 = color;
+        if (currentTransmission.schedule.type >= FlowName.Light)
+        {
+            color2 = color;
+        }
+
+        if (currentTransmission.schedule.type >= FlowName.Medium_Slow)
+        {
+            color3 = color;
+        }
+
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -80,6 +115,28 @@ public class Port : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+		if(currentTransmission != null && Time.time > (blink + .8f))
+        {
+            if (isSource) setColors(); 
+            else
+            {
+                if (blinkOn)
+                {
+                    setColors();
+                }
+                else unsetColors();
+
+                blinkOn = !blinkOn;
+                blink = Time.time;
+            }
+
+            
+
+        } else if (currentTransmission == null) { unsetColors();  }
+
+        //keegan change here
+        l1.material.color = color1;
+        l2.material.color = color2;
+        l3.material.color = color3;
+    }
 }
