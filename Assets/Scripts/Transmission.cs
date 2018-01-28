@@ -47,10 +47,10 @@ public class Transmission {
 
     public bool Run()
     {
-        if (schedule.EmmitNow())
+        if (schedule.emitNow())
         {
-            Debug.Log("Transmission [" + id.ToString() + "] emmiting at " + Time.time.ToString());
-            source.emmit();
+            Debug.Log("Transmission [" + id.ToString() + "] emiting at " + Time.time.ToString());
+            source.emit();
         }
 
         return !schedule.IsOver(Time.time);

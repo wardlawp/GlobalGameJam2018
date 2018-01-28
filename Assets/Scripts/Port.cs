@@ -8,6 +8,7 @@ public class Port : MonoBehaviour {
     public Transform spawnPoint;
     public float reservedUntil { get; private set; }
     public Transmission currentTransmission { get; private set; }
+    public float spawnForce = 5f;
 
     public bool isSource;
     private bool init = false;
@@ -55,11 +56,11 @@ public class Port : MonoBehaviour {
     }
 
 
-    public void emmit(bool overide = false)
+    public void emit(bool overide = false)
     {
         if(!overide && !init)
         {
-            throw new System.Exception("Port::emmit() being called before initialization");
+            throw new System.Exception("Port::emit() being called before initialization");
         }
 
         GameObject newPacketGObj = Instantiate(packetBlueprint);
@@ -67,6 +68,11 @@ public class Port : MonoBehaviour {
         //todo remove this hack?
         Vector3 randomNudge = new Vector3(Random.Range(-.1f, +.1f), Random.Range(-.1f, +.1f), Random.Range(-.1f, +.1f));
         newPacketGObj.transform.position = spawnPoint.position + randomNudge;
+        Rigidbody packetRb = newPacketGObj.GetComponent<Rigidbody>();
+        if (packetRb != null)
+        {
+            packetRb.AddForce(transform.forward * spawnForce);
+        }
     }
 
 	void Start () {

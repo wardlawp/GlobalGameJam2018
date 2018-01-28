@@ -403,7 +403,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1441758914472316}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.026}
+  m_LocalPosition: {x: 0, y: 0, z: -0.198}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4297432074867790}
@@ -1017,6 +1017,7 @@ MonoBehaviour:
   packetBlueprint: {fileID: 1507982259105922, guid: 1d748b8d2d979bd4b90418f0db612f86,
     type: 2}
   spawnPoint: {fileID: 4815411668327518}
+  spawnForce: 500
   isSource: 1
 --- !u!114 &114776472050722264
 MonoBehaviour:
