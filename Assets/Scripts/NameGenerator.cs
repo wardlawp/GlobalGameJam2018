@@ -6,14 +6,60 @@ using UnityEngine;
 
 public static class NameGenerator
 {
-    static string GenName()
+    public static string GenName()
     {
         string sal = salutation[Random.Range(0, salutation.Length - 1)];
         string first = (Random.Range(0, 1) == 0) ? maleNames[Random.Range(0, maleNames.Length - 1)] : maleNames[Random.Range(0, femaleNames.Length - 1)];
         string last = surnames[Random.Range(0, surnames.Length - 1)];
 
-        return sal + " " + first + " last";
+        return sal + " " + first + " " + last;
     }
+
+    public static string GenContent()
+    {
+        return domain[Random.Range(0, domain.Length - 1)] + actions[Random.Range(0, actions.Length - 1)];
+    }
+
+    static string[] domain = {
+        "youtube.com",
+        "amazon.com",
+        "google.com",
+        "pornhub.com",
+        "imgur.com",
+        "reddit.com",
+        "mslive.com",
+        "github.com",
+        "vimeo.com",
+        "rbc.com",
+        "cibc.com",
+        "yahoo.com",
+        "meatspin.com",
+        "aol.net"
+    };
+
+    static string[] actions ={
+        "?search=cats",
+        "?search=how%20to%20get%20rich",
+        "?search=paris%20hilton",
+        "?search=game%20jarm",
+        "?search=doggo%20memes",
+        "?search=why%20are%20the%20game%20jam%20video%20so%20bad",
+        "?search=help%20testicles%20caught",
+        "?search=how%20make%20baby",
+        "?search=bitcoin%20daddies",
+        "?search=french%20toast",
+        "/login?user=meatSpin420",
+        "/login?user=pirateJim6969696",
+        "/login?user=ballerDad",
+        "/login?user=iHateSnapchat",
+        "/login?user=kittens4ever",
+        "/login?user=notABot",
+        "/dogs",
+        "/geese",
+        "/canada",
+        "/delete_my_account",
+        "/checkout"
+    };
 
     static string[] salutation =  {
         "Grampa",

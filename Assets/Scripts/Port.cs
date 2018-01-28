@@ -7,7 +7,7 @@ public class Port : MonoBehaviour {
     public GameObject packetBlueprint;
     public Vector3 spawnOffset;
     public float reservedUntil { get; private set; }
-    public int currentTransmissionId { get; private set; }
+    public Transmission currentTransmission { get; private set; }
 
     private bool isSource;
     private bool init = false;
@@ -20,15 +20,15 @@ public class Port : MonoBehaviour {
 
         init = false;
         reservedUntil = 0.0f;
-        currentTransmissionId = -2;
+        currentTransmission = null;
     }
 
-    public void reserve(int transmissionId, float untilTime, bool isSource = false)
+    public void reserve(Transmission transmission, float untilTime, bool isSource = false)
     {
         init = true;
         this.isSource = isSource;
         reservedUntil = untilTime;
-        currentTransmissionId = transmissionId;
+        currentTransmission = transmission;
 
         initTime = Time.time;
     }
@@ -41,12 +41,12 @@ public class Port : MonoBehaviour {
         {
             
             Packet collidingPacket = other.gameObject.GetComponent<Packet>();
-            int packetTransmissionId = collidingPacket.transmissionId;
+            int packetTransmissionId = collidingPacket.currentTansmission.id;
 
             Debug.Log("Packet [trans:" + packetTransmissionId.ToString() +
-                "] has collided with port [trans:" + currentTransmissionId.ToString() +"]");
+                "] has collided with port [trans:" + currentTransmission.id.ToString() +"]");
 
-            if (currentTransmissionId == currentTransmissionId)
+            if (currentTransmission == collidingPacket.currentTansmission)
             {
                 Debug.Log("Port destroying packet");
                 Destroy(other.gameObject);
@@ -63,7 +63,7 @@ public class Port : MonoBehaviour {
         }
 
         GameObject newPacketGObj = Instantiate(packetBlueprint);
-        newPacketGObj.GetComponent<Packet>().Init(currentTransmissionId);
+        newPacketGObj.GetComponent<Packet>().Init(currentTransmission);
         //todo remove this hack?
         Vector3 randomNudge = new Vector3(Random.Range(-.2f, +.2f), Random.Range(-.2f, +.2f), Random.Range(-.2f, +.2f));
         newPacketGObj.transform.position = transform.position + spawnOffset + randomNudge;

@@ -5,12 +5,25 @@ using UnityEngine;
 public class Transmission {
     public static int ID_INCREMENT = 0;
     public int id;
+    public string clientName;
+    public string contentName;
     private Port source;
     private Port destination;
     public ScheduleEntry schedule;
 
+    public static bool operator ==(Transmission a, Transmission b)
+    {
+        return a.id == b.id;
+    }
+
+    public static bool operator !=(Transmission a, Transmission b)
+    {
+        return a.id != b.id;
+    }
+
     public Transmission(Port source, Port destination, ScheduleEntry schedule)
     {
+
         id = ID_INCREMENT++;
 
         this.source = source;
@@ -19,8 +32,11 @@ public class Transmission {
 
         float timeEnd = schedule.endTime; ;
 
-        source.reserve(id, timeEnd, true);
-        destination.reserve(id, timeEnd);
+        source.reserve(this, timeEnd, true);
+        destination.reserve(this, timeEnd);
+
+        clientName = NameGenerator.GenName();
+        contentName = NameGenerator.GenContent();
 
         Debug.Log("Transmission [" + id.ToString() + "] starting at " + Time.time.ToString());
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum FlowName { Light, Medium, Medium_Slow, High }
+public enum FlowName { Light_Slow, Light, Medium, Medium_Slow, High }
 
 public class ScheduleException : System.Exception {
     public ScheduleException(string reason) : base(reason) { }
@@ -14,7 +14,8 @@ public class LevelController : MonoBehaviour {
 
     public static Dictionary<FlowName, Flow> FlowLevels = new Dictionary<FlowName, Flow>()
     {
-        { FlowName.Light , new Flow{ rate = 1.0f,  duration = 1.0f, receiveDurationAfterSend = 7.0f } },
+        { FlowName.Light , new Flow{ rate = 1.0f,  duration = 1.0f, receiveDurationAfterSend = 8.0f } },
+        { FlowName.Light_Slow , new Flow{ rate = 1.0f,  duration = 1.0f, receiveDurationAfterSend = 15.0f } },
         { FlowName.Medium , new Flow{ rate = 1.5f,  duration = 5.0f, receiveDurationAfterSend = 7.0f } },
         { FlowName.Medium_Slow , new Flow{ rate = 0.5f,  duration = 10.0f, receiveDurationAfterSend = 7.0f } },
         { FlowName.High , new Flow{ rate = 2.0f,  duration = 10.0f, receiveDurationAfterSend = 2.0f } }
@@ -211,7 +212,7 @@ public class LevelController : MonoBehaviour {
             }
         } catch (ScheduleException s)
         {
-            Debug.Log("Schdule is bad. Entry at " + queue.Peek().scheduledStart + "s starts too early.");
+            Debug.Log("Schedule is bad. Entry at " + queue.Peek().scheduledStart + "s starts too early.");
             throw s;
         }
         
