@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Transmission {
-    static int ID_INCREMENT = 0;
+    public static int ID_INCREMENT = 0;
     public int id;
     private Port source;
     private Port destination;
-    private ScheduleEntry schedule;
+    public ScheduleEntry schedule;
 
     public Transmission(Port source, Port destination, ScheduleEntry schedule)
     {
@@ -33,7 +33,7 @@ public class Transmission {
             source.emmit();
         }
 
-        return !schedule.IsOver();
+        return !schedule.IsOver(Time.time);
     }
 
     public void End()

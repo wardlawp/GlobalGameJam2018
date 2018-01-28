@@ -13,10 +13,10 @@ public class Port : MonoBehaviour {
     private bool init = false;
     private float initTime = -1.0f;
 
-    public void Reset()
+    public void Reset(bool force = false)
     {
         
-        if (initTime == Time.time) return; //something else has reserved this tick, don't reset
+        if (!force && initTime == Time.time) return; //something else has reserved this tick, don't reset
 
         init = false;
         reservedUntil = 0.0f;
