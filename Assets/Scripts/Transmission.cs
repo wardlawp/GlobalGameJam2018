@@ -19,7 +19,7 @@ public class Transmission {
 
         float timeEnd = schedule.endTime; ;
 
-        source.reserve(id, timeEnd);
+        source.reserve(id, timeEnd, true);
         destination.reserve(id, timeEnd);
 
         Debug.Log("Transmission [" + id.ToString() + "] starting at " + Time.time.ToString());
@@ -30,6 +30,7 @@ public class Transmission {
         if (schedule.EmmitNow())
         {
             Debug.Log("Transmission [" + id.ToString() + "] emmiting at " + Time.time.ToString());
+            source.emmit();
         }
 
         return !schedule.IsOver();
@@ -37,7 +38,8 @@ public class Transmission {
 
     public void End()
     {
-
+        source.Reset();
+        destination.Reset();
         Debug.Log("Transmission [" + id.ToString() + "] ending at " + Time.time.ToString());
     }
 }

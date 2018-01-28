@@ -25,6 +25,6 @@ public class Test : MonoBehaviour {
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
             input.x -= 1;
 
-        transform.Translate(input);
+        transform.Translate(0.1f * input);
     }
 }
