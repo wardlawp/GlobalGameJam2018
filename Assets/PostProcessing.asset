@@ -59,21 +59,21 @@ MonoBehaviour:
         iterationCount: 256
         stepSize: 3
         widthModifier: 0.5
-        reflectionBlur: 1.3
+        reflectionBlur: 0.1
         reflectBackfaces: 0
       intensity:
-        reflectionMultiplier: 1.53
+        reflectionMultiplier: 1
         fadeDistance: 33
-        fresnelFade: 0.23
-        fresnelFadePower: 1
+        fresnelFade: 0.15
+        fresnelFadePower: 10
       screenEdgeMask:
-        intensity: 0.03
+        intensity: 0.05
   depthOfField:
     m_Enabled: 0
     m_Settings:
-      focusDistance: 10
-      aperture: 5.6
-      focalLength: 50
+      focusDistance: 1.5
+      aperture: 2
+      focalLength: 40
       useCameraFov: 0
       kernelSize: 1
   motionBlur:
@@ -87,15 +87,15 @@ MonoBehaviour:
     m_Settings:
       lowPercent: 45
       highPercent: 95
-      minLuminance: -5
-      maxLuminance: 1
+      minLuminance: -10
+      maxLuminance: 20
       keyValue: 0.25
       dynamicKeyValue: 1
       adaptationType: 0
       speedUp: 2
       speedDown: 1
-      logMin: -8
-      logMax: 4
+      logMin: -14
+      logMax: 9
   bloom:
     m_Enabled: 1
     m_Settings:
