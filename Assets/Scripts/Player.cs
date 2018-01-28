@@ -29,15 +29,16 @@ public class Player : MonoBehaviour {
                 if (raycastHit.transform != transform)
                 {
                     //m_carrying = true;
-                    var hitTransform = raycastHit.transform.GetComponentInParent(typeof(PickupTarget));
-                    if (hitTransform)
+                    var pickupTarget = raycastHit.transform.GetComponentInParent(typeof(PickupTarget)) as PickupTarget;
+                    if (pickupTarget)
                     {
-                        m_attachedObject = hitTransform.transform;
+                        m_attachedObject = pickupTarget.transform;
                         //m_attachedObject.transform.position = m_viewCamera.transform.position + m_viewCamera.transform.forward;
                         //m_attachedObject.transform.parent = m_viewCamera.transform;
                         Rigidbody rb = m_attachedObject.GetComponent<Rigidbody>();
                         if (rb != null)
                         {
+                            pickupTarget.OnPickup();
                             m_attachedObjectOriginalLayer = m_attachedObject.gameObject.layer;
                             m_attachedObject.gameObject.layer = LayerMask.NameToLayer("IgnorePlayer");
                             rb.useGravity = false;
@@ -86,6 +87,8 @@ public class Player : MonoBehaviour {
             {
                 rb.useGravity = true;
                 rb.freezeRotation = false;
+                var pickupTarget = m_attachedObject.GetComponent<PickupTarget>();
+                pickupTarget.OnDrop();
             }
             HoseEnd hoseEnd = m_attachedObject.GetComponent<HoseEnd>();
             if (hoseEnd != null)
@@ -106,6 +109,8 @@ public class Player : MonoBehaviour {
             {
                 rb.useGravity = true;
                 rb.freezeRotation = false;
+                var pickupTarget = m_attachedObject.GetComponent<PickupTarget>();
+                pickupTarget.OnDrop();
             }
             HoseEnd hoseEnd = m_attachedObject.GetComponent<HoseEnd>();
             if (hoseEnd != null)

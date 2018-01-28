@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bucket : MonoBehaviour {
+public class Bucket : PickupTarget
+{
+    public BucketContents contents;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public override void OnPickup()
+    {
+        contents.Freeze();
+        base.OnPickup();
+    }
+
+    public override void OnDrop()
+    {
+        contents.UnFreeze();
+        base.OnDrop();
+    }
 }
