@@ -137,6 +137,7 @@ public class Port : MonoBehaviour {
                 if (blinkOn)
                 {
                     setColors();
+                    GetComponent<AudioSource>().Play();
                 }
                 else unsetColors();
 
