@@ -318,7 +318,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1333231273592198}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4080685926704546}
@@ -390,7 +390,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1291582600049930}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4879341372163276}
@@ -455,7 +455,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1297116700195544}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4850408952766448}
@@ -500,7 +500,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1667083233041184}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4007008340068312}
@@ -832,6 +832,7 @@ MonoBehaviour:
   packetBlueprint: {fileID: 1507982259105922, guid: 1d748b8d2d979bd4b90418f0db612f86,
     type: 2}
   spawnPoint: {fileID: 4008417563970994}
+  isSource: 0
 --- !u!114 &114219191427022012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -897,6 +898,7 @@ MonoBehaviour:
   packetBlueprint: {fileID: 1507982259105922, guid: 1d748b8d2d979bd4b90418f0db612f86,
     type: 2}
   spawnPoint: {fileID: 4769301288868096}
+  isSource: 0
 --- !u!114 &114675497391378220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -911,6 +913,7 @@ MonoBehaviour:
   packetBlueprint: {fileID: 1507982259105922, guid: 1d748b8d2d979bd4b90418f0db612f86,
     type: 2}
   spawnPoint: {fileID: 4885727895278944}
+  isSource: 0
 --- !u!114 &114730434495494172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -925,6 +928,7 @@ MonoBehaviour:
   packetBlueprint: {fileID: 1507982259105922, guid: 1d748b8d2d979bd4b90418f0db612f86,
     type: 2}
   spawnPoint: {fileID: 4259650208903032}
+  isSource: 0
 --- !u!114 &114882889853840826
 MonoBehaviour:
   m_ObjectHideFlags: 1
