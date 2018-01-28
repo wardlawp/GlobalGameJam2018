@@ -26,8 +26,12 @@ public class Hose : MonoBehaviour
 
     public void Send(Packet packet, bool reversed)
     {
-        packet.GetComponent<Rigidbody>().isKinematic = true;
-        packet.hoseSegments = new List<Collider>(reversed ? _hoseSegments : _hoseSegmentsReverse);
+        if (packet.hoseSegments == null || packet.hoseSegments.Count == 0)
+        {
+            packet.GetComponent<Rigidbody>().isKinematic = true;
+            packet.gameObject.layer = LayerMask.NameToLayer("Details");
+            packet.hoseSegments = new List<Collider>(reversed ? _hoseSegments : _hoseSegmentsReverse);
+        }
     }
 
     void Update()

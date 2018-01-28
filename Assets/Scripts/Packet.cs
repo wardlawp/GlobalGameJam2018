@@ -39,14 +39,15 @@ public class Packet : MonoBehaviour {
     {
         if (hoseSegments.Count  > 0)
         {
-            Vector3 transVec = (hoseSegments[0].transform.position - transform.position).normalized * (hoseSpeed * Time.fixedDeltaTime);
+            Vector3 transVec = (hoseSegments[0].bounds.center - transform.position).normalized * (hoseSpeed * Time.fixedDeltaTime);
             transform.Translate(transVec);
-            if ((transform.position - hoseSegments[0].transform.position).sqrMagnitude > (hoseTolerance * hoseTolerance))
+            if ((transform.position - hoseSegments[0].bounds.center).sqrMagnitude < (hoseTolerance * hoseTolerance))
             {
                 hoseSegments.RemoveAt(0);
                 if (hoseSegments.Count == 0)
                 {
                     GetComponent<Rigidbody>().isKinematic = false;
+                    gameObject.layer = LayerMask.NameToLayer("Packets");
                 }
             }
         }

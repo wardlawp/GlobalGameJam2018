@@ -1413,7 +1413,7 @@ MonoBehaviour:
   m_pullForce: 75
   m_orientationSpeed: 360
   m_held: 0
-  direction: 1
+  direction: 0
 --- !u!114 &114242086585079020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1470,7 +1470,7 @@ MonoBehaviour:
   m_pullForce: 75
   m_orientationSpeed: 360
   m_held: 0
-  direction: 0
+  direction: 1
 --- !u!136 &136091874202402614
 CapsuleCollider:
   m_ObjectHideFlags: 1
