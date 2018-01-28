@@ -30,6 +30,7 @@ public class PortScreen : MonoBehaviour
             if(!state.Run(mesh))
             {
                 state = null;
+                mesh.text = "Connection closed...";
             }
         }
         else if(port.currentTransmission != null)
@@ -76,7 +77,7 @@ public class PortScreen : MonoBehaviour
         public bool Run(TextMesh target)
         {
             // transmission over
-            if (trans == null) return false;
+            if (trans == null || trans.schedule.IsOver(Time.time)) return false;
 
             // nothing to do
             if (curPosI == content.Length - 1) return true;
