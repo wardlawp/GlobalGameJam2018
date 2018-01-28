@@ -11,9 +11,13 @@ public class Port : MonoBehaviour {
 
     private bool isSource;
     private bool init = false;
+    private float initTime = -1.0f;
 
     public void Reset()
     {
+        
+        if (initTime == Time.time) return; //something else has reserved this tick, don't reset
+
         init = false;
         reservedUntil = 0.0f;
         currentTransmissionId = -2;
@@ -25,6 +29,8 @@ public class Port : MonoBehaviour {
         this.isSource = isSource;
         reservedUntil = untilTime;
         currentTransmissionId = transmissionId;
+
+        initTime = Time.time;
     }
 
     void OnTriggerEnter(Collider other)
@@ -51,14 +57,16 @@ public class Port : MonoBehaviour {
 
     public void emmit(bool overide = false)
     {
-        if(!overide &&!init)
+        if(!overide && !init)
         {
             throw new System.Exception("Port::emmit() being called before initialization");
         }
 
         GameObject newPacketGObj = Instantiate(packetBlueprint);
         newPacketGObj.GetComponent<Packet>().Init(currentTransmissionId);
-        newPacketGObj.transform.position = transform.position + spawnOffset + new Vector3(Random.Range(-.2f, + .2f),0,0);
+        //todo remove this hack?
+        Vector3 randomNudge = new Vector3(Random.Range(-.2f, +.2f), Random.Range(-.2f, +.2f), Random.Range(-.2f, +.2f));
+        newPacketGObj.transform.position = transform.position + spawnOffset + randomNudge;
     }
 
 	void Start () {

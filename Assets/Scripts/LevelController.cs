@@ -58,6 +58,7 @@ public class LevelController : MonoBehaviour {
     {
         if(lastFlood == -1.0f)
         {
+            Debug.Log("Flood starting");
             //first flood, reset all ports
             foreach (var p in ports)
             {
