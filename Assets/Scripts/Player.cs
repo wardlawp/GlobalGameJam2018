@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
 
     //bool m_carrying;
     public Transform m_attachedObject;
+    int m_attachedObjectOriginalLayer;
     public Transform m_attachmentPoint;
     public float m_pullForce = 20f;
     public float m_throwForce = 75f;
@@ -37,6 +38,8 @@ public class Player : MonoBehaviour {
                         Rigidbody rb = m_attachedObject.GetComponent<Rigidbody>();
                         if (rb != null)
                         {
+                            m_attachedObjectOriginalLayer = m_attachedObject.gameObject.layer;
+                            m_attachedObject.gameObject.layer = LayerMask.NameToLayer("IgnorePlayer");
                             rb.useGravity = false;
                             rb.freezeRotation = true;
                         }
@@ -47,7 +50,9 @@ public class Player : MonoBehaviour {
         }
         else if (m_attachedObject != null && Input.GetButtonDown("Interact"))
         {
-            m_attachedObject.transform.parent = null;
+            //m_attachedObject.transform.parent = null;
+            m_attachedObject.gameObject.layer = m_attachedObjectOriginalLayer;
+            m_attachedObjectOriginalLayer = -1;
             Rigidbody rb = m_attachedObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
@@ -60,7 +65,9 @@ public class Player : MonoBehaviour {
 
         if (m_attachedObject != null && Input.GetButtonDown("Throw"))
         {
-            m_attachedObject.transform.parent = null;
+            //m_attachedObject.transform.parent = null;
+            m_attachedObject.gameObject.layer = m_attachedObjectOriginalLayer;
+            m_attachedObjectOriginalLayer = -1;
             Rigidbody rb = m_attachedObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
