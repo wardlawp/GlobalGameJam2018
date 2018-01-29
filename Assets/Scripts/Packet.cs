@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Packet : MonoBehaviour {
-    private Color oddChannel = Color.red;
+    private Color oddChannel = Color.yellow;
     private Color evenChannel = Color.blue;
     private Color initial;
+    private bool scheduleOver = false;
 
     public Transmission currentTansmission { get; private set; }
+
+    public List<Collider> hoseSegments;
+    public float hoseSpeed = 10f;
+    public float hoseTolerance = 0.1f;
 
     public void Init(Transmission transmission)
     {
@@ -15,7 +20,7 @@ public class Packet : MonoBehaviour {
         currentTansmission = transmission;
 
         if(transmission != null)
-            GetComponent<MeshRenderer>().material.color = (transmission.id % 2 == 0) ? evenChannel: oddChannel;
+            GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", ((transmission.id % 2 == 0) ? evenChannel : oddChannel) * 0.5f);
 
     }
 	// Use this for initialization
@@ -24,9 +29,28 @@ public class Packet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(currentTansmission == null || currentTansmission.schedule.IsOver(Time.time))
+		if(!scheduleOver && (currentTansmission == null || currentTansmission.schedule.IsOver(Time.time)))
         {
-            GetComponent<MeshRenderer>().material.color = initial;
+            GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", Color.black);
+            scheduleOver = true;
         }
 	}
+
+    void FixedUpdate()
+    {
+        if (hoseSegments.Count  > 0)
+        {
+            Vector3 transVec = (hoseSegments[0].bounds.center - transform.position).normalized * (hoseSpeed * Time.fixedDeltaTime);
+            transform.Translate(transVec);
+            if ((transform.position - hoseSegments[0].bounds.center).sqrMagnitude < (hoseTolerance * hoseTolerance))
+            {
+                hoseSegments.RemoveAt(0);
+                if (hoseSegments.Count == 0)
+                {
+                    GetComponent<Rigidbody>().isKinematic = false;
+                    gameObject.layer = LayerMask.NameToLayer("Packets");
+                }
+            }
+        }
+    }
 }

@@ -24,66 +24,55 @@ public class Hose : MonoBehaviour
         _hoseSegmentsReverse.Reverse();
     }
 
-    public void Send(Packet packet, HoseEnd end)
+    public void Send(Packet packet, bool reversed)
     {
-        foreach (var packetGroup in m_sending)
+        if (packet.hoseSegments == null || packet.hoseSegments.Count == 0)
         {
-            if (packetGroup.packet == packet)
-            {
-                return;
-            }
+            packet.GetComponent<Rigidbody>().isKinematic = true;
+            packet.gameObject.layer = LayerMask.NameToLayer("Details");
+            packet.hoseSegments = new List<Collider>(reversed ? _hoseSegments : _hoseSegmentsReverse);
         }
-
-        packet.GetComponent<Rigidbody>().isKinematic = true;
-        packet.gameObject.layer = LayerMask.NameToLayer("Details");
-        m_sending.Add(new PacketGroup
-        {
-            packet = packet,
-            segment = end.transform.parent.GetComponent<Collider>(),
-            direction = end.direction
-        });
     }
 
     void Update()
     {
-        float closestDist = float.MaxValue;
-        Collider selectedSegment = _hoseSegments.First();
-
-        foreach (var sendingPacket in m_sending)
-        {
-            if (!sendingPacket.packet)
-            {
-                m_toRemove.Add(sendingPacket);
-            }
-            else
-            {
-                bool hasHitCurrentSegment = false;
-                foreach (var hoseSegment in sendingPacket.direction ? _hoseSegments : _hoseSegmentsReverse)
-                {
-                    if (hasHitCurrentSegment)
-                    {
-                        var distToCenter = (hoseSegment.transform.position - sendingPacket.packet.transform.position).sqrMagnitude;
-                        if (distToCenter < 1f)
-                        {
-                            selectedSegment = hoseSegment;
-                            break;
-                        }
-                    }
-
-                    if (hoseSegment == sendingPacket.segment)
-                    {
-                        hasHitCurrentSegment = true;
-                    }
-                }
-
-                sendingPacket.segment = selectedSegment;
-                sendingPacket.packet.transform.position = Vector3.Lerp(sendingPacket.packet.transform.position, selectedSegment.transform.position, Time.deltaTime);
-            }
-        }
-
-        foreach (var packet in m_toRemove)
-        {
-            m_sending.Remove(packet);
-        }
-    }
+//         Collider selectedSegment = _hoseSegments.First();
+// 
+//         foreach (var sendingPacket in m_sending)
+//         {
+//             if (!sendingPacket.packet)
+//             {
+//                 m_toRemove.Add(sendingPacket);
+//             }
+//             else
+//             {
+//                 bool hasHitCurrentSegment = false;
+//                 foreach (var hoseSegment in sendingPacket.direction ? _hoseSegments : _hoseSegmentsReverse)
+//                 {
+//                     if (hasHitCurrentSegment)
+//                     {
+//                         var distToCenter = (hoseSegment.transform.position - sendingPacket.packet.transform.position).sqrMagnitude;
+//                         if (distToCenter < 1f)
+//                         {
+//                             selectedSegment = hoseSegment;
+//                             break;
+//                         }
+//                     }
+// 
+//                     if (hoseSegment == sendingPacket.segment)
+//                     {
+//                         hasHitCurrentSegment = true;
+//                     }
+//                 }
+// 
+//                 sendingPacket.segment = selectedSegment;
+//                 sendingPacket.packet.transform.position = Vector3.Lerp(sendingPacket.packet.transform.position, selectedSegment.transform.position, Time.deltaTime);
+//             }
+//         }
+// 
+//         foreach (var packet in m_toRemove)
+//         {
+//             m_sending.Remove(packet);
+//         }
+     }
 }

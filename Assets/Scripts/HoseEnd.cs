@@ -52,6 +52,6 @@ public class HoseEnd : MonoBehaviour
 
     public void Send(Packet packet)
     {
-        m_hose.Send(packet, this);
+        m_hose.Send(packet, direction);
     }
 }

@@ -137,6 +137,7 @@ public class Port : MonoBehaviour {
                 if (blinkOn)
                 {
                     setColors();
+                    GetComponent<AudioSource>().Play();
                 }
                 else unsetColors();
 
@@ -149,8 +150,8 @@ public class Port : MonoBehaviour {
         } else if (currentTransmission == null) { unsetColors();  }
 
         //keegan change here
-        l1.material.color = color1;
-        l2.material.color = color2;
-        l3.material.color = color3;
+        l1.material.SetColor("_EmissionColor", color1);
+	    l2.material.SetColor("_EmissionColor", color2);
+	    l3.material.SetColor("_EmissionColor", color3);
     }
 }

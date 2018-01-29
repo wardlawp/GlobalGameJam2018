@@ -21,11 +21,12 @@ public class HoseAttachPoint : MonoBehaviour {
     void FixedUpdate()
     {
         Collider[] nearby = Physics.OverlapSphere(transform.position, m_attachTolerance);
-        foreach(Collider c in nearby)
+
+        m_attachedHose = null;
+        foreach (Collider c in nearby)
         {
-            m_attachedHose = null;
             HoseEnd hose = c.GetComponent<HoseEnd>();
-            if (hose != null && !hose.m_held)
+            if (hose != null && !hose.m_held && m_attachedHose == null)
             {
                 hose.m_connectionJoint.connectedAnchor = transform.position;
                 if (hose != null)
@@ -46,9 +47,13 @@ public class HoseAttachPoint : MonoBehaviour {
 
                 break;
             }
+        }
 
-            if (m_attachedHose)
+        if (m_attachedHose)
+        foreach (Collider c in nearby)
+        {
             {
+                m_attachedHose.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                 Packet packet = c.GetComponent<Packet>();
                 if (packet && packet.currentTansmission.source == m_port)
                 {
