@@ -14,7 +14,8 @@ public class Packet : MonoBehaviour {
         initial = GetComponent<MeshRenderer>().material.color;
         currentTansmission = transmission;
 
-        GetComponent<MeshRenderer>().material.color = (transmission.id % 2 == 0) ? evenChannel: oddChannel;
+        if(transmission != null)
+            GetComponent<MeshRenderer>().material.color = (transmission.id % 2 == 0) ? evenChannel: oddChannel;
 
     }
 	// Use this for initialization

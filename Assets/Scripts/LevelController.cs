@@ -9,7 +9,8 @@ public class ScheduleException : System.Exception {
     public ScheduleException(string reason) : base(reason) { }
 } 
 public class LevelController : MonoBehaviour {
-
+    public GameObject deathScene;
+    float dieTime = float.MaxValue;
     public List<Port> ports;
     public List<ScheduleEntry> schedule;
 
@@ -53,12 +54,22 @@ public class LevelController : MonoBehaviour {
         {
             RunSchedule();
         }
+
+        if(dieTime < Time.time )
+        {
+            cameraShake.enabled = false;
+            deathScene.GetComponentInChildren<DeathScreen>().is_enabled = true; ;
+        }
     }
 
     bool PlayerFailed()
     {
-        if(!failed) failed = (GameObject.FindGameObjectsWithTag("packet").Length > packetLimit);
-
+        if (!failed)
+        {
+            dieTime = Time.time + 5f;
+            failed = (GameObject.FindGameObjectsWithTag("packet").Length > packetLimit);
+        }
+       
         return failed;
     }
 

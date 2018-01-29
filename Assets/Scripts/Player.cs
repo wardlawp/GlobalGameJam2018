@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-
+    public bool disable;
     public Camera m_viewCamera;
 
     //bool m_carrying;
@@ -22,6 +22,8 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (disable) return;
+
         RaycastHit raycastHit;
         if (m_attachedObject == null && (Input.GetButtonDown("Interact") || Input.GetButtonDown("Throw")))
         {
