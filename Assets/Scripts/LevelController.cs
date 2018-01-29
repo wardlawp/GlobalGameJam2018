@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // order matters
-public enum FlowName { Light_Slow = 0, Light, Medium_Slow ,Medium, High }
+public enum FlowName { Light_Slow = 0, Light, Medium_Slow ,Medium, High, ReallyHigh }
 
 public class ScheduleException : System.Exception {
     public ScheduleException(string reason) : base(reason) { }
@@ -20,7 +20,8 @@ public class LevelController : MonoBehaviour {
         { FlowName.Light_Slow , new Flow{ incoming = 3, rate = .3f,  duration = 10.0f, receiveDurationAfterSend = 5.0f } },
         { FlowName.Medium , new Flow{ incoming = 5, rate = 1.5f,  duration = 5.0f, receiveDurationAfterSend = 7.0f } },
         { FlowName.Medium_Slow , new Flow{ incoming = 3, rate = 0.5f,  duration = 10.0f, receiveDurationAfterSend = 7.0f } },
-        { FlowName.High , new Flow{ incoming = 9, rate = 2.0f,  duration = 10.0f, receiveDurationAfterSend = 2.0f } }
+        { FlowName.High , new Flow{ incoming = 9, rate = 2.0f,  duration = 10.0f, receiveDurationAfterSend = 2.0f } },
+        { FlowName.ReallyHigh , new Flow{ incoming = 4, rate = 6.0f,  duration = 12.0f, receiveDurationAfterSend = 2.0f } }
     };
 
     float startTime;
