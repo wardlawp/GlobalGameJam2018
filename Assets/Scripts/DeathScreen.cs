@@ -29,7 +29,7 @@ public class DeathScreen : MonoBehaviour
             if (!state.Run())
             {
                 state = null;
-                UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+                Application.Quit();
             }
         }
 
